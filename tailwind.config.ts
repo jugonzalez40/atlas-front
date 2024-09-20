@@ -6,6 +6,7 @@ const config: Config = {
 		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+		"./src/domains/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
 		extend: {
@@ -57,11 +58,11 @@ const config: Config = {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			backgroundImage: {
-				'hero-pattern': "url('/back.webp')"
+				'hero-pattern': "url('/back.webp')",
+				'grid-pattern': "url('/pattern1.png')"
 			}
 		}
 	},
-	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	plugins: [require("tailwindcss-animate")],
 };
 export default config;
