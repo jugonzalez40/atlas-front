@@ -1,24 +1,17 @@
 "use client";
 import React from "react";
 
-import { FieldValues, FormProvider, UseFormReturn } from "react-hook-form";
-
-
-// const formSchema = z.object({
-// 	email: z.string().min(1, "requerido").email({
-// 		message: "Esto no es un email"
-// 	}),
-// 	password: z.string().min(1, "requerido")
-// });
+import { FieldValues, FormProvider } from "react-hook-form";
+import { useShallow } from "zustand/shallow";
+import { useFormStore } from "../hooks/useFormStore";
+// import { login } from "@/domains/login/core/use-cases/login";
 
 interface IAbstractFormProps<TValues extends FieldValues> {
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	form: UseFormReturn<TValues, any, undefined>;
-	children: React.ReactNode
-	onSubmit: (values: TValues) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // form: UseFormReturn<TValues, any, undefined>;
+  children: React.ReactNode;
+  onSubmit: (values: TValues) => void;
 }
-
 
 // Recursive Replace Function
 // const replaceChild = (children: ReactNode, control: Control<FieldValues>): ReactNode => {
@@ -26,7 +19,6 @@ interface IAbstractFormProps<TValues extends FieldValues> {
 // 	if (!Array.isArray(children)) {
 // 		children = [children];
 // 	}
-
 
 // 	return Children.map<ReactNode, ReactNode>(children, (child) => {
 // 		if (!React.isValidElement(child)) return child;
@@ -53,20 +45,28 @@ interface IAbstractFormProps<TValues extends FieldValues> {
 // 	});
 // };
 
-export const AbstractForm = <TValues extends FieldValues,>(props: IAbstractFormProps<TValues>) => {
-	const { form, children, onSubmit } = props;
+export const WForm = <TValues extends FieldValues>(
+  props: IAbstractFormProps<TValues>
+) => {
+  const { children, onSubmit } = props;
 
+  const { form } = useFormStore(
+    useShallow((state) => ({
+      form: state.form,
+    }))
+  );
 
-	const onSubmitHandler = (values: TValues) => {
-		console.log(values);
-		onSubmit(values);
-	}
+  const onSubmitHandler = (values: TValues) => {
+    console.log(values);
+    onSubmit(values);
+  };
 
-	return (
-		<FormProvider {...form}>
-			<form onSubmit={form.handleSubmit(onSubmitHandler)} >ß
-				{children}
-			</form>
-		</FormProvider>
-	)
-}
+  if (!form) return;
+
+  return (
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmitHandler)}>{children}</form>
+      {/* <form action={login} >{children}</form> */}
+    </FormProvider>
+  );
+};
