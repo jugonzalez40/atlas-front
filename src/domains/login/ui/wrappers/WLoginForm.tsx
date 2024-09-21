@@ -8,6 +8,7 @@ import { WInput } from "../../../core/form/components/WInput";
 import { WSubmit } from "../../../core/form/components/WSubmit";
 import { useToast } from "@/hooks/use-toast";
 import { useFormManager } from "@/domains/core/form/hooks/useFormManager";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().min(1, "requerido").email({
@@ -39,16 +40,16 @@ export const WLoginForm = () => {
     });
   };
 
-  // const mon = async () => {
-  //   const result = await fetch(
-  //     "https://atlas-back-c3gghehzfufbdphu.canadacentral-01.azurewebsites.net/api/hello"
-  //   );
-  //   console.log(await result.text());
-  // };
+  const mon = async () => {
+    const result = await fetch(
+      "https://atlas-back-c3gghehzfufbdphu.canadacentral-01.azurewebsites.net/api/hello"
+    );
+    console.log(await result.text());
+  };
 
-  // useEffect(() => {
-  //   mon()
-  // }, []);
+  useEffect(() => {
+    mon();
+  }, []);
 
   return (
     <WForm<TFormData> onSubmit={onSubmit}>
