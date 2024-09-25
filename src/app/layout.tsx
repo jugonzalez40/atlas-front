@@ -4,6 +4,11 @@ import "../globals.css";
 
 import { RootClient } from "./rootClient";
 import { FormStoreProvider } from "@/domains/core/form/data/FormStoreProvider";
+import { init } from "@/services/init";
+
+if (process.env.NEXT_RUNTIME === 'nodejs') {
+  // init();
+}
 
 const geistSans = localFont({
   src: "../../fonts/GeistVF.woff",
@@ -26,6 +31,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  init();
   return (
     <html lang="en">
       <body
