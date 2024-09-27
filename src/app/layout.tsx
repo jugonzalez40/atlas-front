@@ -5,8 +5,9 @@ import "../globals.css";
 import { RootClient } from "./rootClient";
 import { FormStoreProvider } from "@/domains/core/form/data/FormStoreProvider";
 import { init } from "@/services/init";
+import { Toaster } from "@/components/ui/toaster";
 
-if (process.env.NEXT_RUNTIME === 'nodejs') {
+if (process.env.NEXT_RUNTIME === "nodejs") {
   // init();
 }
 
@@ -40,7 +41,7 @@ export default function RootLayout({
         <FormStoreProvider>{children}</FormStoreProvider>
 
         <RootClient />
-        {/* <Toaster /> */}
+        <Toaster />
       </body>
     </html>
   );

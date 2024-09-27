@@ -8,7 +8,14 @@ import { WInput } from "../../../core/form/components/WInput";
 import { WSubmit } from "../../../core/form/components/WSubmit";
 import { useToast } from "@/hooks/use-toast";
 import { useFormManager } from "@/domains/core/form/hooks/useFormManager";
-import { authenticate } from "@/domains/login/core/use-cases/auth.server";
+import {
+  authenticate,
+  IAuthInput,
+  IAuthOutput,
+} from "@/domains/login/core/use-cases/authenticate.server";
+
+import { useInvalidCredentials } from "../../core/use-cases/invalidCredentials";
+import { useFetch } from "@/hooks/useFetch";
 // import { useEffect } from "react";
 
 const formSchema = z.object({
@@ -29,18 +36,16 @@ export const WLoginForm = () => {
     },
   });
 
-  const { setIsFetching } = useFormManager(form);
-  const { toast } = useToast();
+  useFormManager(form);
+
+  const { checkResponse } = useInvalidCredentials();
+  const { execute } = useFetch<TFormData, IAuthOutput>({
+    action: authenticate,
+    onError: checkResponse,
+  });
 
   const onSubmitHandler = async (values: TFormData) => {
-
-    setIsFetching(true);
-
-
-    toast({
-      title: "Ocurrió un error",
-      variant: "destructive",
-    });
+    execute(values);
   };
 
   // const mon = async () => {

@@ -9,6 +9,6 @@ export interface IAtlasInstances {
 }
 
 export interface IAtlasService<T = null, U = void> {
-  load: (...args: T[]) => Promise<void>;
+  load: (args: T) => Promise<void>;
   getInstance: () => U;
 }
