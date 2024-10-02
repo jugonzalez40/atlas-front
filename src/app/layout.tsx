@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
 
-import { RootClient } from "./rootClient";
-import { FormStoreProvider } from "@/domains/core/form/data/FormStoreProvider";
+import { FormStoreProvider } from "@/domains/common/form/data/FormStoreProvider";
 import { init } from "@/services/init";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -39,8 +38,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <FormStoreProvider>{children}</FormStoreProvider>
-
-        <RootClient />
         <Toaster />
       </body>
     </html>

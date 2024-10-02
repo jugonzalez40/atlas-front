@@ -3,19 +3,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { WForm } from "../../../core/form/components/WForm";
-import { WInput } from "../../../core/form/components/WInput";
-import { WSubmit } from "../../../core/form/components/WSubmit";
-import { useToast } from "@/hooks/use-toast";
-import { useFormManager } from "@/domains/core/form/hooks/useFormManager";
+import { WForm } from "../../../common/form/ui/wrappers/WForm";
+import { WInput } from "../../../common/form/ui/wrappers/WInput";
+import { WSubmit } from "../../../common/form/ui/wrappers/WSubmit";
+
 import {
   authenticate,
-  IAuthInput,
   IAuthOutput,
 } from "@/domains/login/core/use-cases/authenticate.server";
 
 import { useInvalidCredentials } from "../../core/use-cases/invalidCredentials";
 import { useFetch } from "@/hooks/useFetch";
+import { useFormManager } from "@/domains/common/form/core/hooks/useFormManager";
 // import { useEffect } from "react";
 
 const formSchema = z.object({

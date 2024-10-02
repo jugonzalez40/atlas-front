@@ -1,10 +1,9 @@
 "use server";
 
-
 import { IGenericOutput } from "@/hooks/useFetch";
 import { ConfigService } from "@/services/ConfigService";
-import { RequestService } from "@/services/RequestService";
-import { AxiosResponse, isAxiosError } from "axios";
+import { GENERIC_ERROR, RequestService } from "@/services/RequestService";
+import { AxiosResponse } from "axios";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -19,24 +18,15 @@ export interface IAuthOutput extends IGenericOutput {
 
 type AuthAxiosResponse = AxiosResponse<IAuthOutput>;
 
-const GENERIC_ERROR = {
-  status: 500,
-  error: "An unexpected error occurred",
-};
-
 const fetchAuth = async (
   input: IAuthInput
 ): Promise<AuthAxiosResponse | IGenericOutput> => {
   const fetch = RequestService.getInstance();
-  try {
-    return await fetch.post<IAuthOutput>("/auth?status=200", input);
-  } catch (error) {
-    if (isAxiosError(error)) {
-      return RequestService.buildError(error);
-    }
 
-    return GENERIC_ERROR;
-  }
+  // return await fetch.post<IAuthOutput>("/auth?status=401", input);
+  return await fetch
+    .post<IAuthOutput>("/auth?status=200", input)
+    .catch(RequestService.buildError);
 };
 
 const setAuthTokenHeader = (token: string) => {
@@ -50,7 +40,6 @@ const setAuthTokenHeader = (token: string) => {
 };
 
 export async function authenticate(input: IAuthInput): Promise<IAuthOutput> {
-
   const result = await fetchAuth(input);
 
   if (result.status === 200) {

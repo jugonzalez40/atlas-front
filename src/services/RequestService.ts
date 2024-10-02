@@ -1,4 +1,4 @@
-import axios, { AxiosError, CreateAxiosDefaults } from "axios";
+import axios, { AxiosError, CreateAxiosDefaults, isAxiosError } from "axios";
 import { IAtlasService } from "types/config";
 import merge from "lodash.merge";
 
@@ -7,6 +7,15 @@ export interface IGenericRequestError {
   error: string;
   code: string;
 }
+
+export const GENERIC_ERROR = {
+  status: 500,
+  error: "An unexpected error occurred",
+  code: "GENERIC_ERROR",
+};
+
+// const FETCH_LIBRARY = "axios";
+// const FETCH_LIBRARY = "fetch";
 
 class RequestServiceClass implements IAtlasService<CreateAxiosDefaults> {
   public async load(customConfig?: CreateAxiosDefaults) {
@@ -19,15 +28,20 @@ class RequestServiceClass implements IAtlasService<CreateAxiosDefaults> {
   }
 
   public getInstance() {
-    return global.___ATLAS_INSTANCES___.axiosInstance;
+    return global.___ATLAS_INSTANCES___?.axiosInstance;
   }
 
-  public buildError(payload: AxiosError): IGenericRequestError {
-    return {
-      status: payload.status || 500,
-      error: payload.message || "",
-      code: payload.code || "GENERIC_ERROR",
-    };
+  public buildError(error: unknown): IGenericRequestError {
+    if (isAxiosError(error)) {
+      const payload = error as AxiosError;
+      return {
+        status: payload.status || GENERIC_ERROR.status,
+        error: payload.message || GENERIC_ERROR.error,
+        code: payload.code || GENERIC_ERROR.code,
+      };
+    }
+
+    return GENERIC_ERROR;
   }
 }
 

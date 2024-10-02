@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useShallow } from "zustand/shallow";
-import { useFormStore } from "../hooks/useFormStore";
+import { useFormStore } from "../../hooks/useFormStore";
 
 interface IWSubmitProps {
   text: string;

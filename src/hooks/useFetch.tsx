@@ -1,7 +1,6 @@
-import { useFormStore } from "@/domains/core/form/hooks/useFormStore";
+import { useFormStore } from "@/domains/common/form/core/hooks/useFormStore";
 import { useToast } from "@/hooks/use-toast";
-import { IGenericRequestError } from "@/services/RequestService";
-import React from "react";
+
 import { useShallow } from "zustand/shallow";
 
 export interface IGenericOutput {
@@ -62,5 +61,5 @@ export const useFetch = <ServerInput, ServerOutput extends IGenericOutput>({
     }
   };
 
-  return { execute, isFetching };
+  return { execute };
 };

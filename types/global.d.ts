@@ -3,7 +3,7 @@ import { IAtlasConfig, IAtlasInstances } from "./config";
 
 declare global {
   namespace globalThis {
-    var ___ATLAS_CONFIG___: IAtlasConfig;
-    var ___ATLAS_INSTANCES___: IAtlasInstances;
+    var ___ATLAS_CONFIG___: IAtlasConfig = {};
+    var ___ATLAS_INSTANCES___: IAtlasInstances = {};
   }
 }

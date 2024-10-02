@@ -8,7 +8,19 @@ const nextConfig = {
     fetches: {
       fullUrl: true,
     },
-  }
+  },
+
+  images: {
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+        port: "",
+        pathname: "**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

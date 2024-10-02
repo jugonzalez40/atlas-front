@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { FieldPath, FieldValues } from "react-hook-form";
 import { useShallow } from "zustand/shallow";
-import { useFormStore } from "../hooks/useFormStore";
+import { useFormStore } from "../../core/hooks/useFormStore";
 
 interface IAbstractInputProps {
   label: string;

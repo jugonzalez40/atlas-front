@@ -5,7 +5,6 @@ import { IAtlasConfig, IAtlasService } from "types/config";
 import { config as configDefault } from "config/default";
 import { config as configLocal } from "config/local";
 import { config as configMock } from "config/mock";
-import { custom } from "zod";
 
 type ConfigKeys = "default" | "local" | "mock"; // Define the allowed keys
 
@@ -13,7 +12,7 @@ const env = process.env.NODE_ENV as ConfigKeys;
 // const DEFAULT_CONFIG_NAME = "default";
 
 class ConfigServiceClass implements IAtlasService<IAtlasConfig> {
-  public async load(customConfig?: IAtlasConfig) {
+  public async load(customConfig?: Partial<IAtlasConfig>) {
     await this.setConfig(customConfig);
   }
 
@@ -21,7 +20,7 @@ class ConfigServiceClass implements IAtlasService<IAtlasConfig> {
     return global.___ATLAS_CONFIG___;
   }
 
-  private async setConfig(customConfig?: IAtlasConfig) {
+  private async setConfig(customConfig?: Partial<IAtlasConfig>) {
     try {
       const configModules = {
         default: configDefault,

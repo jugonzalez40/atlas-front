@@ -1,7 +1,8 @@
 import { useContext } from "react";
-import { TFormStore } from "../data/store";
-import { FormStoreContext } from "../data/FormStoreProvider";
+
 import { useStore } from "zustand";
+import { TFormStore } from "../../data/store";
+import { FormStoreContext } from "../../data/FormStoreProvider";
 
 export const useFormStore = <T,>(selector: (store: TFormStore) => T): T => {
   const formStoreContext = useContext(FormStoreContext);
