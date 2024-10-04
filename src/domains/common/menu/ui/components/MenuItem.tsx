@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import {
   ArchiveRestore,
   BookUser,
@@ -8,6 +9,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+
+import { headers } from "next/headers";
 
 export interface IMenuItemProps {
   href: string;
@@ -35,17 +38,22 @@ export const MenuItem = ({ href, text, id }: IMenuItemProps) => {
     ? MENU_STATICS_CONFIG[id as TMenuStatics].icon
     : ArchiveRestore;
 
+  const baseStyles = `flex px-2 py-1 mb-1 w-full items-center whitespace-nowrap
+      ring-offset-background transition-colors
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50
+      hover:bg-gray-100 hover:text-accent-foreground rounded-md`;
+
+  const pathUrl = headers().get("referer");
+  const isActive = pathUrl?.includes(href);
+
   return (
     <Link
       href={href}
-      className="flex p-2 w-full items-center whitespace-nowrap
-      font-medium ring-offset-background transition-colors
-      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
-      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50
-      hover:bg-gray-100 hover:text-accent-foreground rounded-md"
+      className={cn(baseStyles, { "bg-primary text-muted hover:bg-primary hover:text-muted": isActive })}
     >
-      <StaticIcon size={20} />
-      <h3 className="ml-2 align-middle">{text}</h3>
+      <StaticIcon className="h-4 w-4" />
+      <p className="ml-2 align-middle text-base">{text}</p>
     </Link>
   );
 };

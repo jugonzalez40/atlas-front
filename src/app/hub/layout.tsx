@@ -14,6 +14,43 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { WMenu } from "@/domains/common/menu/ui/wrappers/WMenu";
+import { Button } from "@/components/ui/button";
+
+import { DropdownMenuIcon } from "@radix-ui/react-icons";
+
+import {
+  CircleUserRound,
+  Cloud,
+  CreditCard,
+  Github,
+  Keyboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Plus,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users,
+} from "lucide-react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { WHeader } from "../../domains/common/menu/ui/wrappers/WHeader";
 
 export const metadata: Metadata = {
   title: "Atlas - Codima",
@@ -27,31 +64,26 @@ export default function HubLayout({
 }>) {
   // init();
   return (
-    <div className="flex flex-row w-screen h-screen border-4">
+    <div className="flex flex-row w-screen h-screen">
       <div className="w-[200px]  ">
-        <div className="w-full px-2 py-4 border-b-4 bg-primary">
+        <div className="w-full px-2 py-2 bg-primary h-[60px]">
           <Image
             alt="Atlas logo"
             src={AtlasPowered}
             width={0}
             height={0}
-            className="w-full cursor-pointer"
+            className="cursor-pointer"
           />
         </div>
 
-        <div className="w-full border-r-4 h-[calc(100%-100px)]">
+        <div className="w-full h-[calc(100%-60px)]">
           <WMenu />
         </div>
       </div>
       <div className="flex flex-auto flex-col">
-        <div className="h-[100px] bg-primary border-b-4">
-          <Avatar className="w-14 h-14">
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </div>
+        <WHeader />
 
-        <div>
+        <div className="w-full h-[calc(100%-60px)] bg-gray-100 px-6 py-2">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>

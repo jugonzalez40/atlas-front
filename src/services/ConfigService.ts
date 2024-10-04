@@ -29,7 +29,6 @@ class ConfigServiceClass implements IAtlasService<IAtlasConfig> {
       };
 
       const config = configModules[`${env}`];
-
       const defaultConfig = configModules.default;
 
       global.___ATLAS_CONFIG___ =

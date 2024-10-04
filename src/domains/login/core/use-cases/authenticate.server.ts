@@ -1,26 +1,35 @@
 "use server";
 
-import { IGenericOutput } from "@/hooks/useFetch";
-import { ConfigService } from "@/services/ConfigService";
-import { GENERIC_ERROR, RequestService } from "@/services/RequestService";
+import { AuthService } from "@/services/AuthService";
+import {
+  GENERIC_ERROR,
+  IGenericRequestError,
+  RequestService,
+} from "@/services/RequestService";
 import { AxiosResponse } from "axios";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export interface IAuthInput {
   email: string;
   password: string;
 }
 
-export interface IAuthOutput extends IGenericOutput {
-  token?: string;
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  permissions: string[];
+}
+
+export interface IAuthOutput {
+  accessToken: string;
+  user: IUser;
 }
 
 type AuthAxiosResponse = AxiosResponse<IAuthOutput>;
 
 const fetchAuth = async (
   input: IAuthInput
-): Promise<AuthAxiosResponse | IGenericOutput> => {
+): Promise<AuthAxiosResponse | IGenericRequestError> => {
   const fetch = RequestService.getInstance();
 
   // return await fetch.post<IAuthOutput>("/auth?status=401", input);
@@ -29,27 +38,18 @@ const fetchAuth = async (
     .catch(RequestService.buildError);
 };
 
-const setAuthTokenHeader = (token: string) => {
-  ConfigService.load({
-    axiosConfig: {
-      headers: {
-        "X-Auth": `Bearer ${token}`,
-      },
-    },
-  });
-};
-
-export async function authenticate(input: IAuthInput): Promise<IAuthOutput> {
+export async function authenticate(
+  input: IAuthInput
+): Promise<IAuthOutput | IGenericRequestError> {
   const result = await fetchAuth(input);
 
-  if (result.status === 200) {
-    const { data } = result as AuthAxiosResponse;
-    if (!data.token) return GENERIC_ERROR;
+  if ("data" in result) {
+    const { data } = result;
+    if (!data.accessToken) return GENERIC_ERROR;
 
-    setAuthTokenHeader(data.token);
-    cookies().set("auth_token", data.token);
-    redirect("/home");
+    AuthService.login(data);
+    return data;
   }
 
-  return (result as AuthAxiosResponse).data || (result as IAuthOutput);
+  return result;
 }

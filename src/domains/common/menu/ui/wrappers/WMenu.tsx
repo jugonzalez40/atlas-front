@@ -11,6 +11,7 @@ interface IMenuStructure {
 
 const getMeuStructure = cache(async () => {
   const fetch = RequestService.getInstance();
+  if (!fetch) return { menu: [] };
   const result = await fetch
     .get<IMenuStructure>("/menu")
     .catch(RequestService.buildError);

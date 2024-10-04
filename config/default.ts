@@ -9,4 +9,6 @@ export const config = {
     },
     timeout: 2000,
   },
+  accessTokenKey: "access_token",
+  authHeader: "X-Auth"
 } satisfies IAtlasConfig;
