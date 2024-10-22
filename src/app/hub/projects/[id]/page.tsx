@@ -18,7 +18,7 @@ export default async function EditProjectPage({
 
   return (
     <div className="mt-6">
-      <PageTitle>Editar projecte</PageTitle>
+      <PageTitle>Editar proyecto</PageTitle>
       <WProjectForm project={project} />
     </div>
   );

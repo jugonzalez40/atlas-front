@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { FieldPath, FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { cn } from "@/lib/utils";
@@ -26,31 +26,34 @@ import {
 } from "@/components/ui/popover";
 import { useFormStore } from "../../core/hooks/useFormStore";
 import { useShallow } from "zustand/shallow";
+import { formSchema } from "@/domains/projects/ui/wrappers/WProjectForm";
 
-const FormSchema = z.object({
-  dob: z.date({
-    required_error: "A date of birth is required.",
-  }),
-});
+interface IAbstractDateProps {
+  label: string;
+}
 
-export function DatePickerForm() {
+export const WDate = <
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
+>(
+  props: {
+    name: TName;
+  } & IAbstractDateProps
+) => {
+  const { name, label } = props;
   const { form } = useFormStore(
     useShallow((state) => ({
       form: state.form,
     }))
   );
 
-  const onSubmit(data: z.infer<typeof FormSchema>) =>  {
-
-  }
-
   return (
     <FormField
       control={form.control || null}
-      name="dob"
+      name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>Date of birth</FormLabel>
+          <FormLabel>{label}</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>
@@ -82,12 +85,12 @@ export function DatePickerForm() {
               />
             </PopoverContent>
           </Popover>
-          <FormDescription>
+          {/* <FormDescription>
             Your date of birth is used to calculate your age.
-          </FormDescription>
+          </FormDescription> */}
           <FormMessage />
         </FormItem>
       )}
     />
   );
-}
+};

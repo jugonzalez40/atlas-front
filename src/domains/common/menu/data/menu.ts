@@ -24,7 +24,7 @@ const MENU_TREE: IMenuItem[] = [
   {
     id: "REQUESTS_VIEW",
     title: "Solicitudes",
-    url: "/home",
+    url: "/hub/request",
     permissionId: "request_view",
     icon: ArchiveRestore,
   },
@@ -32,7 +32,7 @@ const MENU_TREE: IMenuItem[] = [
   {
     id: "MACHINES_VIEW",
     title: "Maquinaria",
-    url: "/machines",
+    url: "/hub/machines",
     permissionId: "machine_view",
     icon: Forklift,
   },
@@ -40,7 +40,7 @@ const MENU_TREE: IMenuItem[] = [
   {
     id: "PROJECTS_VIEW",
     title: "Proyectos",
-    url: "/projects",
+    url: "/hub/projects",
     permissionId: "project_view",
     icon: Notebook,
   },
@@ -48,7 +48,7 @@ const MENU_TREE: IMenuItem[] = [
   {
     id: "OPERATORS_VIEW",
     title: "Operarios",
-    url: "/operators",
+    url: "/hub/operators",
     permissionId: "operator_view",
     icon: BookUser,
   },
@@ -64,7 +64,7 @@ const MENU_TREE: IMenuItem[] = [
   {
     id: "COSTS_VIEW",
     title: "Centro de costos",
-    url: "/costs",
+    url: "/hub/costs",
     permissionId: "cost_view",
     icon: HandCoins,
   },

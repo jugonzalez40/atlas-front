@@ -1,5 +1,8 @@
 import { WDataTable } from "@/domains/common/data-table/ui/wrappers/WDataTable";
-import { projectColumns, IProject } from "@/domains/projects/data/project-columns";
+import {
+  projectColumns,
+  IProject,
+} from "@/domains/projects/data/project-columns";
 
 interface IWProjectTablesProps {
   projects: IProject[];

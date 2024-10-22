@@ -32,6 +32,12 @@ export interface IProject {
   endDate: string;
 }
 
+const formatDate = (date: string) => {
+  const formatted = new Date(date).toLocaleDateString();
+
+  return <div className="text-right font-medium">{formatted}</div>;
+};
+
 export const projectColumns: ColumnDef<IProject>[] = [
   {
     id: "select",
@@ -56,13 +62,42 @@ export const projectColumns: ColumnDef<IProject>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "nit",
-    header: "NIT",
+    accessorKey: "contractNumber",
+    header: "Numero de contrato",
   },
   {
-    accessorKey: "name",
-    header: "Projecte empresa",
+    accessorKey: "client",
+    header: "Cliente",
+    cell: ({ row }) => {
+      const client = row.getValue("client") as IClient;
+      return <div className="font-medium">{client.name}</div>;
+    },
   },
+  {
+    accessorKey: "goal",
+    header: "Objetivo",
+  },
+  {
+    accessorKey: "startDate",
+    header: "Fecha inicio",
+    cell: ({ row }) => {
+      return (
+        <div className="font-medium">
+          {formatDate(row.getValue("startDate"))}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "endDate",
+    header: "Fecha final",
+    cell: ({ row }) => {
+      return (
+        <div className="font-medium">{formatDate(row.getValue("endDate"))}</div>
+      );
+    },
+  },
+
   {
     id: "actions",
     cell: ({ row }) => {

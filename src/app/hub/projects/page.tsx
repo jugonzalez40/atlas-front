@@ -13,7 +13,7 @@ export default async function ProjectsPage() {
 
   return (
     <div className="flex-row mt-6">
-      <PageTitle>Projectes</PageTitle>
+      <PageTitle>Proyectos</PageTitle>
       <div className="mt-6">
         <WProjectsTable projects={projects} />
         <Button asChild className="mt-6">

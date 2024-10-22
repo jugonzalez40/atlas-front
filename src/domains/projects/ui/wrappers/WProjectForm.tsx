@@ -16,12 +16,15 @@ import { redirect } from "next/navigation";
 import { Save } from "lucide-react";
 import { editProject } from "../../core/use-cases/editProject.server";
 import { formSchema as clientFormSchema } from "@/domains/clients/ui/wrappers/WClientForm";
+import { WTextarea } from "@/domains/common/form/ui/wrappers/WTextarea";
+import { WDate } from "@/domains/common/form/ui/wrappers/WDate";
+import { Wselect } from "@/domains/common/form/ui/wrappers/WSelect";
 
 export interface IProjectsOutput {
   projects: IProject[];
 }
 
-const formSchema = z.object({
+export const formSchema = z.object({
   contractNumber: z.string().min(1, "requerido"),
   goal: z.string().min(1, "requerido"),
   startDate: z.string().datetime().min(1, "requerido"),
@@ -84,11 +87,31 @@ export const WProjectForm = ({ project }: IWProjectFormProps) => {
     <WForm<TFormData> onSubmit={onSubmitHandler}>
       <div className="flex flex-col">
         <div className="flex-auto mb-5">
-          <WInput name="nit" label="NIT" placeholder="1234567-8" />
+          <WInput
+            name="contractNumber"
+            label="Numero de contrato"
+            placeholder="123"
+          />
         </div>
         <div className="flex-auto mb-5">
-          <WInput name="name" label="Nombre" />
+          <WTextarea name="goal" label="Objectivo" placeholder="123" />
         </div>
+        <div className="flex-auto mb-5">
+          <WDate name="startDate" label="Fecha inicio" />
+        </div>
+
+        <div className="flex-auto mb-5">
+          <WDate name="endDate" label="Fecha fin" />
+        </div>
+
+        <div className="flex-auto mb-5">
+          <Wselect
+            name="client"
+            label="Clientes"
+            placeholder="Seleccione un cliente"
+          />
+        </div>
+
         <WSubmit text="Guardar" className="w-fit" icon={<Save size={15} />} />
       </div>
     </WForm>

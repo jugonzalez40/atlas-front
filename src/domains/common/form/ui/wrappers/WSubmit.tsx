@@ -32,7 +32,9 @@ export const WSubmit = ({
       disabled={isFetching}
     >
       {isFetching && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+
       {!isFetching && icon}
+      <span className="ml-2" />
       {text}
     </Button>
   );

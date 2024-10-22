@@ -15,7 +15,7 @@ export default function HubLayout({ children }: { children: React.ReactNode }) {
         <WMenu />
         <WFooter />
       </Sidebar>
-      <main className="h-screen w-full md:w-[850px] p-4 md:px-6  ">
+      <main className="h-screen w-full p-4 md:px-6  ">
         <MenuBread />
         {children}
       </main>
