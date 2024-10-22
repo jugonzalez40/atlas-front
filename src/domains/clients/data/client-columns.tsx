@@ -24,7 +24,7 @@ import { redirect } from "next/dist/server/api-utils";
 // You can use a Zod schema here if you want.
 export interface IClient {
   nit: string;
-  id?: number;
+  id?: string;
   name: string;
 }
 

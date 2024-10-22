@@ -43,7 +43,7 @@ export const WClientForm = ({ client }: IWClientFormProps) => {
   const onSuccessHandler = () => {
     toast({
       variant: "success",
-      description: "👍 Cliente registrado satisfactoriamente",
+      description: "👍 Cliente guardado satisfactoriamente",
     });
 
     setTimeout(() => redirect("/hub/clients"), 2000);

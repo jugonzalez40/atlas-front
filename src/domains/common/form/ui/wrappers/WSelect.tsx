@@ -25,28 +25,28 @@ import {
 import { useFormStore } from "../../core/hooks/useFormStore";
 import { useShallow } from "zustand/shallow";
 
-const FormSchema = z.object({
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-});
-
-interface IAbstractDateProps {
-  label: string;
-  placeholder: string;
+interface TGenericOptions {
+  id?: string;
+  name: string;
 }
 
-export const Wselect = <
-  TFieldValues extends FieldValues,
-  TName extends FieldPath<TFieldValues>
+interface IAbstractDateProps<T> {
+  label: string;
+  placeholder: string;
+  options: T[];
+  value?: T;
+}
+
+export const WSelect = <
+  TInput extends TGenericOptions,
+  TFieldValues extends FieldValues = any,
+  TName extends FieldPath<TFieldValues> = any
 >(
   props: {
     name: TName;
-  } & IAbstractDateProps
+  } & IAbstractDateProps<TInput>
 ) => {
-  const { name, label, placeholder } = props;
+  const { name, label, placeholder, options, value } = props;
   const { form } = useFormStore(
     useShallow((state) => ({
       form: state.form,
@@ -57,28 +57,38 @@ export const Wselect = <
     <FormField
       control={form.control}
       name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
-            <FormControl>
-              <SelectTrigger>
-                <SelectValue placeholder={placeholder} />
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent>
-              <SelectItem value="m@example.com">m@example.com</SelectItem>
-              <SelectItem value="m@google.com">m@google.com</SelectItem>
-              <SelectItem value="m@support.com">m@support.com</SelectItem>
-            </SelectContent>
-          </Select>
-          {/* <FormDescription>
-            You can manage email addresses in your{" "}
-            <Link href="/examples/forms">email settings</Link>.
-          </FormDescription> */}
-          <FormMessage />
-        </FormItem>
-      )}
+      render={({ field }) => {
+        const onChangeHandler = (value: string) =>
+          field.onChange(options.find(({ id }) => `${id}` === value));
+
+        return (
+          <FormItem>
+            <FormLabel>{label}</FormLabel>
+            <Select
+              onValueChange={onChangeHandler}
+              // defaultValue={valueSetter}
+              // value={valueSetter}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue
+                    placeholder={field.value?.name || "Seleccione un valor"}
+                  />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {(options || []).map((option) => (
+                  <SelectItem key={option.id} value={`${option.id}`}>
+                    {option.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <FormMessage />
+          </FormItem>
+        );
+      }}
     />
   );
 };

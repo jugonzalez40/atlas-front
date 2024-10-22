@@ -17,7 +17,7 @@ export const NAVIGATION_MAP = [
   },
   {
     url: "/hub/projects",
-    title: "Proyecto",
+    title: "Proyectos",
   },
   {
     url: "/hub/projects/add",

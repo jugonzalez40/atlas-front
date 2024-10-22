@@ -25,7 +25,7 @@ import { IClient } from "@/domains/clients/data/client-columns";
 // You can use a Zod schema here if you want.
 export interface IProject {
   id?: string;
-  client?: IClient;
+  client: IClient;
   contractNumber: string;
   goal: string;
   startDate: string;
@@ -60,6 +60,7 @@ export const projectColumns: ColumnDef<IProject>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
+
   },
   {
     accessorKey: "contractNumber",

@@ -18,7 +18,8 @@ import { editProject } from "../../core/use-cases/editProject.server";
 import { formSchema as clientFormSchema } from "@/domains/clients/ui/wrappers/WClientForm";
 import { WTextarea } from "@/domains/common/form/ui/wrappers/WTextarea";
 import { WDate } from "@/domains/common/form/ui/wrappers/WDate";
-import { Wselect } from "@/domains/common/form/ui/wrappers/WSelect";
+import { WSelect } from "@/domains/common/form/ui/wrappers/WSelect";
+import { IClient } from "@/domains/clients/data/client-columns";
 
 export interface IProjectsOutput {
   projects: IProject[];
@@ -27,18 +28,20 @@ export interface IProjectsOutput {
 export const formSchema = z.object({
   contractNumber: z.string().min(1, "requerido"),
   goal: z.string().min(1, "requerido"),
-  startDate: z.string().datetime().min(1, "requerido"),
-  endDate: z.string().datetime().min(1, "requerido"),
+  startDate: z.string().datetime({ local: true }).min(1, "requerido"),
+  endDate: z.string().datetime({ local: true }).min(1, "requerido"),
   client: clientFormSchema,
+  // clientId: z.string().min(1, "requerido"),
 });
 
 export type TFormData = z.infer<typeof formSchema>;
 
 interface IWProjectFormProps {
   project?: IProject;
+  clients: IClient[];
 }
 
-export const WProjectForm = ({ project }: IWProjectFormProps) => {
+export const WProjectForm = ({ project, clients }: IWProjectFormProps) => {
   const { toast } = useToast();
   const onErrorHandler = () => {
     toast({
@@ -50,7 +53,7 @@ export const WProjectForm = ({ project }: IWProjectFormProps) => {
   const onSuccessHandler = () => {
     toast({
       variant: "success",
-      description: "👍 Projecte registrado satisfactoriamente",
+      description: "👍 Projecto guardado satisfactoriamente",
     });
 
     setTimeout(() => redirect("/hub/projects"), 2000);
@@ -94,7 +97,7 @@ export const WProjectForm = ({ project }: IWProjectFormProps) => {
           />
         </div>
         <div className="flex-auto mb-5">
-          <WTextarea name="goal" label="Objectivo" placeholder="123" />
+          <WTextarea name="goal" label="Objetivo" placeholder="Lorem.." />
         </div>
         <div className="flex-auto mb-5">
           <WDate name="startDate" label="Fecha inicio" />
@@ -105,10 +108,11 @@ export const WProjectForm = ({ project }: IWProjectFormProps) => {
         </div>
 
         <div className="flex-auto mb-5">
-          <Wselect
+          <WSelect<IClient>
             name="client"
             label="Clientes"
             placeholder="Seleccione un cliente"
+            options={clients}
           />
         </div>
 
