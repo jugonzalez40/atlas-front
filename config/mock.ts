@@ -1,7 +1,7 @@
 import { IAtlasConfig } from "types/config";
 
-export const config = {
+export const config: Partial<IAtlasConfig> = {
   axiosConfig: {
     baseURL: "http://localhost:3000",
   },
-} satisfies IAtlasConfig;
+} satisfies Partial<IAtlasConfig>;

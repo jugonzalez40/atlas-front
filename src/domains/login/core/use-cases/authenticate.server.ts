@@ -1,12 +1,8 @@
 "use server";
 
 import { AuthService } from "@/services/AuthService";
-import {
-  GENERIC_ERROR,
-  IGenericRequestError,
-  RequestService,
-} from "@/services/RequestService";
-import { AxiosResponse } from "axios";
+import { RequestService } from "@/services/RequestService";
+import { encryptPassword } from "./encryptCredentials";
 
 export interface IAuthInput {
   email: string;
@@ -15,40 +11,40 @@ export interface IAuthInput {
 
 export interface IUser {
   id: string;
-  name: string;
   email: string;
-  permissions: string[];
+}
+
+export interface IRole {
+  id: string;
+  name: string;
+  description: string;
 }
 
 export interface IAuthOutput {
   accessToken: string;
   user: IUser;
+  permissions: string[];
+  role: IRole;
 }
 
-type AuthAxiosResponse = AxiosResponse<IAuthOutput>;
+const transformCredentials = (input: IAuthInput): IAuthInput => {
+  const password = encryptPassword(input.password);
 
-const fetchAuth = async (
-  input: IAuthInput
-): Promise<AuthAxiosResponse | IGenericRequestError> => {
-  const fetch = RequestService.getInstance();
-
-  // return await fetch.post<IAuthOutput>("/auth?status=401", input);
-  return await fetch
-    .post<IAuthOutput>("/auth?status=200", input)
-    .catch(RequestService.buildError);
+  return {
+    ...input,
+    password,
+  };
 };
 
-export async function authenticate(
-  input: IAuthInput
-): Promise<IAuthOutput | IGenericRequestError> {
-  const result = await fetchAuth(input);
+export async function authenticate(input: IAuthInput) {
+  const result = await RequestService.fetch<IAuthOutput>("/auth?status=200", {
+    method: "POST",
+    body: JSON.stringify(transformCredentials(input)),
+  });
+  const bad = result.status >= 400;
 
-  if ("data" in result) {
-    const { data } = result;
-    if (!data.accessToken) return GENERIC_ERROR;
-
-    AuthService.login(data);
-    return data;
+  if (!bad && result.data?.accessToken) {
+    AuthService.login(result.data);
   }
 
   return result;

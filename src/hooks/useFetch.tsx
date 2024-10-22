@@ -3,19 +3,19 @@ import { useToast } from "@/hooks/use-toast";
 
 import { useShallow } from "zustand/shallow";
 
-export interface IGenericOutput {
+export interface IGenericOutput<DataOutput> {
   status: number;
   error?: string;
-  code?: string;
+  data?: DataOutput;
 }
 
 interface IUseFetchProps<I, O> {
-  action: (args: I) => Promise<O>;
-  onError?: (result: IGenericOutput) => void;
+  action: (args: I) => Promise<IGenericOutput<O>>;
+  onError?: (result: IGenericOutput<O>) => void;
   onSuccess?: (result: O) => void;
 }
 
-export const useFetch = <ServerInput, ServerOutput extends IGenericOutput>({
+export const useFetch = <ServerInput, ServerOutput>({
   action,
   onError,
   onSuccess,
@@ -28,7 +28,7 @@ export const useFetch = <ServerInput, ServerOutput extends IGenericOutput>({
     }))
   );
 
-  const onErrorHandler = (result: IGenericOutput) => {
+  const onErrorHandler = (result: IGenericOutput<ServerOutput>) => {
     toast({
       variant: "destructive",
       description: "Hubo un problema intentando conectar con el servidor ",
@@ -38,10 +38,10 @@ export const useFetch = <ServerInput, ServerOutput extends IGenericOutput>({
     onError(result);
   };
 
-  const onSuccessHandler = (result: ServerOutput) => {
+  const onSuccessHandler = (result: IGenericOutput<ServerOutput>) => {
     // show toast, congrats
     if (!onSuccess) return;
-    onSuccess(result);
+    onSuccess(result.data as ServerOutput);
   };
 
   const execute = async (input: ServerInput) => {

@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cookies } from "next/headers";
 import { ConfigService } from "@/services/ConfigService";
 import { AuthService } from "@/services/AuthService";
+import { AuthStoreProvider } from "@/domains/login/data/AuthStoreProvider";
 
 if (process.env.NEXT_RUNTIME === "nodejs") {
   // init();
@@ -46,7 +47,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <FormStoreProvider>{children}</FormStoreProvider>
+        <AuthStoreProvider>
+          <FormStoreProvider>{children}</FormStoreProvider>
+        </AuthStoreProvider>
+
         <Toaster />
       </body>
     </html>

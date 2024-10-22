@@ -1,17 +1,24 @@
-import { create } from 'zustand';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createStore } from "zustand/vanilla";
+import { IAuthOutput } from "../core/use-cases/authenticate.server";
 
-interface ILoginState {
-  email:string;
-	password: string;
-  setEmail: (email:string) => void,
-	setPassword: (password:string) => void
-}
+export type TAuthState = {
+  userMetadata: IAuthOutput;
+};
 
-export const useLoginStore = create<ILoginState>()(
-	(set) => ({
-		email: "",
-		password:"",
-		setEmail: (email: string) => set({ email}),
-		setPassword: (password: string) => set({ password}),
-	}),
-);
+export type TAuthActions = {
+  setUserMetadata: (from: any) => void;
+};
+
+export type TAuthStore = TAuthState & TAuthActions;
+
+export const defaultInitState: TAuthState = {
+  userMetadata: {} as IAuthOutput,
+};
+
+export const createAuthStore = (initState: TAuthState = defaultInitState) => {
+  return createStore<TAuthStore>()((set) => ({
+    ...initState,
+    setUserMetadata: (userMetadata) => set({ userMetadata }),
+  }));
+};

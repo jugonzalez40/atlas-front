@@ -1,5 +1,5 @@
 import { ConfigService } from "./ConfigService";
-import { RequestService } from "./RequestService";
+// import { RequestService } from "./RequestService";
 // import { init as initMocks } from "./MockService";
 
 export const init = async () => {
@@ -8,5 +8,5 @@ export const init = async () => {
   // global.___ATLAS_CONFIG___ = {};
 
   await ConfigService.load();
-  await RequestService.load();
+  // await RequestService.load();
 };

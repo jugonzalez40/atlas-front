@@ -37,14 +37,6 @@ export default async function Login() {
           className="w-full h-full object-cover"
           priority
         />
-
-        {/* <img
-          alt="Hero background"
-          src={data.urls.full || heroBack}
-          width={0}
-          height={0}
-          className="w-full h-full object-cover"
-        /> */}
       </div>
       <div
         className="w-full lg:w-[600px] content-center p-2 md:p-20 lg:p-3 animate-in fade-in
@@ -65,10 +57,7 @@ export default async function Login() {
         </CardHeader>
         <CardContent>
           <WLoginForm />
-          {/* </Suspense> */}
         </CardContent>
-
-        <div></div>
       </div>
     </div>
   );

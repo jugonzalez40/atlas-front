@@ -10,16 +10,6 @@ class AuthServiceClass {
       ?.value;
   }
 
-  public setAuthTokenHeader(xAuth: string | null) {
-    ConfigService.load({
-      axiosConfig: {
-        headers: {
-          [ConfigService.getInstance().authHeader || "X-Auth"]: xAuth,
-        },
-      },
-    });
-  }
-
   public isValidToken() {
     // 1. check if there is any token in cookies
     const token = this.getAuthToken();
@@ -44,18 +34,23 @@ class AuthServiceClass {
   }
 
   public login(authOutput: IAuthOutput) {
-    const { accessToken, user } = authOutput;
-    // this.setAuthTokenHeader(`Bearer ${accessToken}`);
+    const { accessToken } = authOutput;
     cookies().set(
       ConfigService.getInstance().accessTokenKey || "",
       accessToken
     );
+    cookies().set("user_metadata", JSON.stringify(authOutput));
 
-    cookies().set("user", JSON.stringify(user));
     redirect("/hub/home");
   }
 
-  private getUser() {}
+  public getUserMetadata(): IAuthOutput {
+    const userMetadata = JSON.parse(
+      decodeURIComponent(cookies().get("user_metadata")?.value || "{}")
+    );
+
+    return userMetadata as IAuthOutput;
+  }
 }
 
 const AuthService = new AuthServiceClass();

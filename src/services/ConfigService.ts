@@ -38,6 +38,25 @@ class ConfigServiceClass implements IAtlasService<IAtlasConfig> {
       console.log(error);
     }
   }
+
+  getConfig() {
+    try {
+      const configModules = {
+        default: configDefault,
+        local: configLocal,
+        mock: configMock,
+      };
+
+      const config = configModules[`${env}`];
+      const defaultConfig = configModules.default;
+
+      return merge(defaultConfig, config) || defaultConfig;
+    } catch (error) {
+      console.log("CONFIG_SERVICE", "Could read config");
+      console.log(error);
+      return {} as IAtlasConfig;
+    }
+  }
 }
 
 const ConfigService = new ConfigServiceClass();

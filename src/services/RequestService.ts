@@ -1,84 +1,63 @@
-import axios, {
-  AxiosError,
-  AxiosResponse,
-  CreateAxiosDefaults,
-  isAxiosError,
-} from "axios";
-import { IAtlasService } from "types/config";
-import merge from "lodash.merge";
-
-import camelcaseKeysDeep from "camelcase-keys-deep";
+import { ConfigService } from "./ConfigService";
+import { cookies } from "next/headers";
 
 export interface IGenericRequestError {
   status: number;
-  error: string;
+  error: unknown;
   code: string;
 }
 
-export const GENERIC_ERROR = {
-  status: 500,
-  error: "An unexpected error occurred",
-  code: "GENERIC_ERROR",
-};
+export interface IFetchResponse<ResponseType> {
+  status: number;
+  error?: string;
+  data?: ResponseType;
+}
 
-// const FETCH_LIBRARY = "axios";
-// const FETCH_LIBRARY = "fetch";
+class RequestServiceClass {
+  private buildAccessTokenHeader() {
+    const config = ConfigService.getConfig();
+    const accessToken = cookies().get(config.accessTokenKey);
 
-class RequestServiceClass implements IAtlasService<CreateAxiosDefaults> {
-  private onSuccessResponse(response: AxiosResponse) {
-    return camelcaseKeysDeep(response) as AxiosResponse;
-  }
+    if (!accessToken) return {};
 
-  private onErrorResponse(error) {
-    // do something
-
-    return Promise.reject(camelcaseKeysDeep(error));
-  }
-
-  public async load(customConfig?: CreateAxiosDefaults) {
-    const axiosGlobalConfig = global.___ATLAS_CONFIG___.axiosConfig;
-
-    const axiosInstance = axios.create(merge(axiosGlobalConfig, customConfig));
-
-    axiosInstance.interceptors.response.use(
-      this.onSuccessResponse,
-      this.onErrorResponse
-    );
-
-    global.___ATLAS_INSTANCES___ = {
-      ...(global.___ATLAS_INSTANCES___ || {}),
-      axiosInstance,
+    return {
+      headers: {
+        [config.authHeader || "X-Auth"]: `Bearer ${accessToken.value}`,
+      },
     };
   }
 
-  public getInstance() {
-    return global.___ATLAS_INSTANCES___?.axiosInstance;
-  }
-
-  public buildError(error: unknown): IGenericRequestError {
-    if (isAxiosError(error)) {
-      const payload = error as AxiosError;
-      return {
-        status: payload.status || GENERIC_ERROR.status,
-        error: payload.message || GENERIC_ERROR.error,
-        code: payload.code || GENERIC_ERROR.code,
-      };
-    }
-
-    return GENERIC_ERROR;
-  }
-
-  public async fetch(
+  public async fetch<ResponseType>(
     input: string | URL | globalThis.Request,
     init?: RequestInit
-  ){
+  ): Promise<IFetchResponse<ResponseType>> {
+    const config = ConfigService.getConfig();
 
+    const fetchConfig = {
+      ...config.fetchConfig,
+      ...init,
+      ...this.buildAccessTokenHeader(),
+    };
 
-    init.
+    const fullPath = `${config.fetchConfig.baseUrl}${input}`;
 
+    try {
+      const response = await fetch(fullPath, fetchConfig);
+      if (!response.ok)
+        throw new Error(`${response.status} => ${response.statusText}`);
+      const { data } = (await response.json()) as { data: ResponseType };
+      return {
+        status: response.status,
+        data,
+      };
+    } catch (error) {
+      console.log(error);
 
-
-    return (await fetch(input, init)).json();
+      return {
+        status: 500,
+        error: (error as string) || "GENERIC_ERROR",
+      };
+    }
   }
 }
 

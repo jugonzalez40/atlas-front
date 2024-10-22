@@ -24,7 +24,6 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/hub") &&
     !AuthService.isValidToken()
   ) {
-    AuthService.setAuthTokenHeader(null);
     response = NextResponse.redirect(new URL("/login", request.url));
     response.cookies.delete(ConfigService.getInstance().accessTokenKey || "");
   }
@@ -34,7 +33,7 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/login") &&
     AuthService.isValidToken()
   ) {
-    response = NextResponse.redirect(new URL("/hub/home", request.url));
+    response = NextResponse.redirect(new URL("/hub", request.url));
   }
 
   return response;
