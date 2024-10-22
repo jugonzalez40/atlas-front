@@ -15,4 +15,16 @@ export const NAVIGATION_MAP = [
     url: "/hub/clients/*",
     title: "Editar cliente",
   },
+  {
+    url: "/hub/projects",
+    title: "Proyecto",
+  },
+  {
+    url: "/hub/projects/add",
+    title: "Nuevo proyecto",
+  },
+  {
+    url: "/hub/projects/*",
+    title: "Editar proyecto",
+  },
 ];

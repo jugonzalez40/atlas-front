@@ -50,6 +50,10 @@ body {
     --warning: 27 96% 61%; /* Keep warning color */
     --warning-foreground: 27 30% 95%;
 
+    --success: 120 70% 40%; /* Keep warning color */
+    --success-foreground: 79.6 89.1% 89.2%;
+
+
     --destructive: 0 84.2% 60.2%; /* Keep original */
     --destructive-foreground: 210 40% 98%;
 
@@ -99,6 +103,9 @@ body {
 
     --warning: 27 80% 40%; /* Darker warning */
     --warning-foreground: 27 40% 90%; /* Lighter for visibility */
+
+    --success: 120 70% 40%; /* Keep warning color */
+    --success-foreground: 79.6 89.1% 89.2%;
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;

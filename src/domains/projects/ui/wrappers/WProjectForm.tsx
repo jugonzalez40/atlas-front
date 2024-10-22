@@ -9,29 +9,33 @@ import { WSubmit } from "../../../common/form/ui/wrappers/WSubmit";
 
 import { useFetch } from "@/hooks/useFetch";
 import { useFormManager } from "@/domains/common/form/core/hooks/useFormManager";
-import { IClient } from "@/domains/clients/data/client-columns";
-import { addClient } from "../../core/use-cases/addClient.server";
+import { IProject } from "@/domains/projects/data/project-columns";
+import { addProject } from "../../core/use-cases/addProject.server";
 import { useToast } from "@/hooks/use-toast";
 import { redirect } from "next/navigation";
 import { Save } from "lucide-react";
-import { editClient } from "../../core/use-cases/editClient.server";
+import { editProject } from "../../core/use-cases/editProject.server";
+import { formSchema as clientFormSchema } from "@/domains/clients/ui/wrappers/WClientForm";
 
-export interface IClientsOutput {
-  clients: IClient[];
+export interface IProjectsOutput {
+  projects: IProject[];
 }
 
-export const formSchema = z.object({
-  nit: z.string().min(1, "requerido"),
-  name: z.string().min(1, "requerido"),
+const formSchema = z.object({
+  contractNumber: z.string().min(1, "requerido"),
+  goal: z.string().min(1, "requerido"),
+  startDate: z.string().datetime().min(1, "requerido"),
+  endDate: z.string().datetime().min(1, "requerido"),
+  client: clientFormSchema,
 });
 
 export type TFormData = z.infer<typeof formSchema>;
 
-interface IWClientFormProps {
-  client?: IClient;
+interface IWProjectFormProps {
+  project?: IProject;
 }
 
-export const WClientForm = ({ client }: IWClientFormProps) => {
+export const WProjectForm = ({ project }: IWProjectFormProps) => {
   const { toast } = useToast();
   const onErrorHandler = () => {
     toast({
@@ -43,26 +47,31 @@ export const WClientForm = ({ client }: IWClientFormProps) => {
   const onSuccessHandler = () => {
     toast({
       variant: "success",
-      description: "👍 Cliente registrado satisfactoriamente",
+      description: "👍 Projecte registrado satisfactoriamente",
     });
 
-    setTimeout(() => redirect("/hub/clients"), 2000);
+    setTimeout(() => redirect("/hub/projects"), 2000);
   };
 
   const form = useForm<TFormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: client || {
-      nit: "",
-      name: "",
-    },
+    defaultValues:
+      project ||
+      ({
+        contractNumber: "",
+        goal: "",
+        startDate: "",
+        endDate: "",
+        client: {},
+      } as IProject),
   });
 
   useFormManager(form);
 
   const { execute } = useFetch<TFormData, void>({
-    action: Boolean(client)
-      ? (input) => editClient({ ...(client as IClient), ...input })
-      : addClient,
+    action: Boolean(project)
+      ? (input) => editProject({ ...(project as IProject), ...input })
+      : addProject,
     onError: onErrorHandler,
     onSuccess: onSuccessHandler,
   });
@@ -86,4 +95,4 @@ export const WClientForm = ({ client }: IWClientFormProps) => {
   );
 };
 
-export default WClientForm;
+export default WProjectForm;

@@ -20,7 +20,9 @@ export const MenuBread = () => {
 
     const realUrl = urlFragments
       .map((fragment, index) =>
-        fragment.replace("*", pathFragments[index] || "*")
+        Boolean(Number(pathFragments[index]))
+          ? fragment.replace("*", pathFragments[index] || "*")
+          : fragment
       )
       .join("/");
 

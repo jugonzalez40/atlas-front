@@ -9,7 +9,7 @@ interface IWSubmitProps {
   text: string;
   size?: "lg" | "default" | "sm" | "icon" | null | undefined;
   className?: string;
-  icon: TIcon;
+  icon?: TIcon;
 }
 
 export const WSubmit = ({

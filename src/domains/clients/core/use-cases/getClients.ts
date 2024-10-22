@@ -1,6 +1,6 @@
 "use server";
 
-import { IClient } from "@/domains/data/client-columns";
+import { IClient } from "@/domains/clients/data/client-columns";
 import { RequestService } from "@/services/RequestService";
 
 export async function getClients() {

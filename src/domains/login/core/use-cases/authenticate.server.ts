@@ -32,7 +32,7 @@ const transformCredentials = (input: IAuthInput): IAuthInput => {
 
   return {
     ...input,
-    password,
+    // password,
   };
 };
 

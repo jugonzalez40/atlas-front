@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+
 import {
   Table,
   TableBody,
@@ -18,6 +20,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import React from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -30,6 +33,7 @@ export function WDataTable<TData, TValue>({
   columns,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
+
   const table = useReactTable({
     data,
     columns,
@@ -37,55 +41,119 @@ export function WDataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 7,
+      },
+    },
     state: {
       sorting,
     },
   });
 
+  // Handle page change onClick
+  const handlePageChange = (newPageIndex) => {
+    // setPageIndex(newPageIndex);
+    table.setPageIndex(newPageIndex);
+  };
+
   return (
-    <div className="rounded-md border w-full">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+    <>
+      <div className="rounded-md border w-full">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                Sin resultados
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </div>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Sin resultados
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex justify-center space-x-2 mt-4">
+        {/* Previous Button */}
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          <ArrowLeft />
+          <span className="ml-2">Anterior</span>
+        </Button>
+
+        {/* Page Number Buttons */}
+        {[
+          ...Array(
+            Math.ceil(data.length / table.getState().pagination.pageSize)
+          ).keys(),
+        ].map((page) => (
+          <Button
+            size="sm"
+            key={page}
+            disabled={page === table.getState().pagination.pageIndex}
+            variant={
+              page === table.getState().pagination.pageIndex
+                ? "default"
+                : "ghost"
+            }
+            onClick={() => handlePageChange(page)}
+          >
+            {page + 1}
+          </Button>
+        ))}
+
+        {/* Next Button */}
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          <span className="mr-2">Siguiente</span>
+
+          <ArrowRight />
+        </Button>
+      </div>
+    </>
   );
 }

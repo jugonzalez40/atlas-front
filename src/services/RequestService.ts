@@ -1,3 +1,4 @@
+import merge from "lodash.merge";
 import { ConfigService } from "./ConfigService";
 import { cookies } from "next/headers";
 
@@ -22,6 +23,7 @@ class RequestServiceClass {
 
     return {
       headers: {
+        "Content-Type": "application/json",
         [config.authHeader || "X-Auth"]: `Bearer ${accessToken.value}`,
       },
     };
@@ -33,18 +35,22 @@ class RequestServiceClass {
   ): Promise<IFetchResponse<ResponseType>> {
     const config = ConfigService.getConfig();
 
-    const fetchConfig = {
-      ...config.fetchConfig,
-      ...init,
-      ...this.buildAccessTokenHeader(),
-    };
+    const fetchConfig = merge(
+      { ...config.fetchConfig },
+      { ...init },
+      this.buildAccessTokenHeader()
+    );
 
     const fullPath = `${config.fetchConfig.baseUrl}${input}`;
 
     try {
       const response = await fetch(fullPath, fetchConfig);
-      if (!response.ok)
-        throw new Error(`${response.status} => ${response.statusText}`);
+      if (!response.ok) {
+        return {
+          status: response.status,
+          error: response.statusText,
+        };
+      }
       const { data } = (await response.json()) as { data: ResponseType };
       return {
         status: response.status,

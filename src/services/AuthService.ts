@@ -41,7 +41,7 @@ class AuthServiceClass {
     );
     cookies().set("user_metadata", JSON.stringify(authOutput));
 
-    redirect("/hub/home");
+    redirect("/hub");
   }
 
   public getUserMetadata(): IAuthOutput {
