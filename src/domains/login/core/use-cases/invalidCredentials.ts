@@ -3,7 +3,7 @@ import { IGenericOutput } from "@/hooks/useFetch";
 
 export const useInvalidCredentials = () => {
   const { toast } = useToast();
-  const checkResponse = (result: IGenericOutput) => {
+  const checkResponse = (result: { status: number }) => {
     if (result.status !== 401) return;
 
     toast({

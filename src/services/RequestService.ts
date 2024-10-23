@@ -1,6 +1,6 @@
-import merge from "lodash.merge";
 import { ConfigService } from "./ConfigService";
 import { cookies } from "next/headers";
+import { deepMerge } from "@/lib/utils";
 
 export interface IGenericRequestError {
   status: number;
@@ -35,7 +35,7 @@ class RequestServiceClass {
   ): Promise<IFetchResponse<ResponseType>> {
     const config = ConfigService.getConfig();
 
-    const fetchConfig = merge(
+    const fetchConfig = deepMerge(
       { ...config.fetchConfig },
       { ...init },
       this.buildAccessTokenHeader()

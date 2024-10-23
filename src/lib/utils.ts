@@ -19,3 +19,21 @@ export function getJSONCookie<TCookieFormat>(name: string) {
   const decodedCookie = decodeURIComponent(specificCookie);
   return JSON.parse(decodedCookie || "{}") as TCookieFormat;
 }
+
+export function deepMerge(target: any, ...sources: any[]): any {
+  if (!sources.length) return target;
+  const source = sources.shift();
+
+  if (typeof target === 'object' && typeof source === 'object') {
+    for (const key in source) {
+      if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        if (!target[key]) target[key] = {};
+        deepMerge(target[key], source[key]);
+      } else {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return deepMerge(target, ...sources);
+}

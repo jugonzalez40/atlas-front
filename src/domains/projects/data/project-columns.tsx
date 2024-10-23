@@ -33,9 +33,9 @@ export interface IProject {
 }
 
 const formatDate = (date: string) => {
-  const formatted = new Date(date).toLocaleDateString();
+  // const formatted = new Date(date).toLocaleDateString();
 
-  return <div className="text-right font-medium">{formatted}</div>;
+  return <div className="text-right font-medium">{date}</div>;
 };
 
 export const projectColumns: ColumnDef<IProject>[] = [

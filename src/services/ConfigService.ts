@@ -5,6 +5,7 @@ import { IAtlasConfig, IAtlasService } from "types/config";
 import { config as configDefault } from "config/default";
 import { config as configLocal } from "config/local";
 import { config as configMock } from "config/mock";
+import { deepMerge } from "@/lib/utils";
 
 type ConfigKeys = "default" | "local" | "mock"; // Define the allowed keys
 
@@ -32,7 +33,7 @@ class ConfigServiceClass implements IAtlasService<IAtlasConfig> {
       const defaultConfig = configModules.default;
 
       global.___ATLAS_CONFIG___ =
-        merge(defaultConfig, config, customConfig || {}) || defaultConfig;
+      deepMerge(defaultConfig, config, customConfig || {}) || defaultConfig;
     } catch (error) {
       console.log("CONFIG_SERVICE", "Could read config");
       console.log(error);
@@ -50,7 +51,7 @@ class ConfigServiceClass implements IAtlasService<IAtlasConfig> {
       const config = configModules[`${env}`];
       const defaultConfig = configModules.default;
 
-      return merge(defaultConfig, config) || defaultConfig;
+      return deepMerge(defaultConfig, config) || defaultConfig;
     } catch (error) {
       console.log("CONFIG_SERVICE", "Could read config");
       console.log(error);
