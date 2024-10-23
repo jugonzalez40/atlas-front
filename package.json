@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_ENV=production next dev",
     "build": "next build",
-    "start-local": "next start",
+    "start": "next start",
     "lint": "next lint",
     "mocks": "npx json-server mocks/auth.json"
   },
