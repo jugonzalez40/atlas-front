@@ -11,6 +11,16 @@ const nextConfig = {
     },
   },
 
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/login",
+        permanent: true,
+      },
+    ];
+  },
+
   images: {
     unoptimized: true,
     remotePatterns: [

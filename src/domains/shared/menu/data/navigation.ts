@@ -27,4 +27,16 @@ export const NAVIGATION_MAP = [
     url: "/hub/projects/*",
     title: "Editar proyecto",
   },
+  {
+    url: "/hub/costs",
+    title: "Centro de costos",
+  },
+  {
+    url: "/hub/costs/add",
+    title: "Nuevo centro de costos",
+  },
+  {
+    url: "/hub/costs/*",
+    title: "Editar centro de costos",
+  },
 ];

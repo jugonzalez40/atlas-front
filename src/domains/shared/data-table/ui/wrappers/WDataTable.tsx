@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ICRUD } from "@/hooks/useCrudHandler";
 
 import {
   ColumnDef,
@@ -22,21 +23,29 @@ import {
 } from "@tanstack/react-table";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import React from "react";
+import { WTableActions } from "./WTableActions";
+import { buildCommonColumns } from "../../core/use-cases/buildCommonColumns";
 
+export interface IActionsConfig<I, O = void> {
+  delete: ICRUD<I, O>;
+  editLink: string;
+}
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  actionsConfig: IActionsConfig<TData>;
 }
 
 export function WDataTable<TData, TValue>({
   data,
   columns,
+  actionsConfig,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const table = useReactTable({
     data,
-    columns,
+    columns: buildCommonColumns(columns, actionsConfig),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,

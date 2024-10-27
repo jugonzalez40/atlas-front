@@ -1,5 +1,5 @@
-import { useFormStore } from "@/domains/common/form/core/hooks/useFormStore";
-import { useToast } from "@/hooks/use-toast";
+import { useFormStore } from "@/domains/shared/form/core/hooks/useFormStore";
+import { useToast } from "@/hooks/useToast";
 
 import { useShallow } from "zustand/shallow";
 
@@ -9,8 +9,10 @@ export interface IGenericOutput<DataOutput> {
   data?: DataOutput;
 }
 
+type TAction<I, O> = (args: I) => Promise<IGenericOutput<O>>;
+
 interface IUseFetchProps<I, O> {
-  action: (args: I) => Promise<IGenericOutput<O>>;
+  action: TAction<I, O>;
   onError?: (result: IGenericOutput<O>) => void;
   onSuccess?: (result: O) => void;
 }

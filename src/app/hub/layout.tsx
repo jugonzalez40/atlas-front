@@ -1,10 +1,10 @@
 import { Sidebar, SidebarProvider } from "@/components/ui/sidebar";
 
-import { WHeader } from "@/domains/common/menu/ui/wrappers/WHeader";
-import { WMenu } from "@/domains/common/menu/ui/wrappers/WMenu";
-import { WFooter } from "@/domains/common/menu/ui/wrappers/WFooter";
+import { WHeader } from "@/domains/shared/menu/ui/wrappers/WHeader";
+import { WMenu } from "@/domains/shared/menu/ui/wrappers/WMenu";
+import { WFooter } from "@/domains/shared/menu/ui/wrappers/WFooter";
 import { WUserInitializator } from "@/domains/login/ui/wrappers/WUserInitializator";
-import { MenuBread } from "@/domains/common/menu/ui/components/MenuBread";
+import { MenuBread } from "@/domains/shared/menu/ui/components/MenuBread";
 
 export default function HubLayout({ children }: { children: React.ReactNode }) {
   return (

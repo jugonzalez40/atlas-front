@@ -3,9 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { WForm } from "../../../common/form/ui/wrappers/WForm";
-import { WInput } from "../../../common/form/ui/wrappers/WInput";
-import { WSubmit } from "../../../common/form/ui/wrappers/WSubmit";
+import { WForm } from "../../../shared/form/ui/wrappers/WForm";
+import { WInput } from "../../../shared/form/ui/wrappers/WInput";
+import { WSubmit } from "../../../shared/form/ui/wrappers/WSubmit";
 
 import {
   authenticate,
@@ -14,7 +14,7 @@ import {
 
 import { useInvalidCredentials } from "../../core/use-cases/invalidCredentials";
 import { useFetch } from "@/hooks/useFetch";
-import { useFormManager } from "@/domains/common/form/core/hooks/useFormManager";
+import { useFormManager } from "@/domains/shared/form/core/hooks/useFormManager";
 // import { useEffect } from "react";
 
 const formSchema = z.object({

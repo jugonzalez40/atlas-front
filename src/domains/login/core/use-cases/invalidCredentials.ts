@@ -1,4 +1,4 @@
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/useToast";
 import { IGenericOutput } from "@/hooks/useFetch";
 
 export const useInvalidCredentials = () => {

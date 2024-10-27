@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
 
-import { FormStoreProvider } from "@/domains/common/form/data/FormStoreProvider";
+import { FormStoreProvider } from "@/domains/shared/form/data/FormStoreProvider";
 import { init } from "@/services/init";
 import { Toaster } from "@/components/ui/toaster";
 import { cookies } from "next/headers";

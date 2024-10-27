@@ -26,7 +26,7 @@ import { useFormStore } from "../../core/hooks/useFormStore";
 import { useShallow } from "zustand/shallow";
 
 interface TGenericOptions {
-  id?: string;
+  id?: number;
   name: string;
 }
 
