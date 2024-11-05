@@ -12,10 +12,10 @@ const actionsConfig: IActionsConfig<IClient> = {
   delete: {
     action: deleteClient,
     onSuccess: {
-      message: "Proyecto eliminado satisfactoriamente",
+      message: "Cliente eliminado satisfactoriamente",
     },
   },
-  editLink: "/hub/projects/:id",
+  editLink: "/hub/client/:id",
 };
 
 export const WClientsTable = ({ clients }: IWClientTablesProps) => {

@@ -1,15 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldPath, FieldValues, useForm } from "react-hook-form";
-import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
-  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,45 +18,61 @@ import {
 } from "@/components/ui/select";
 import { useFormStore } from "../../core/hooks/useFormStore";
 import { useShallow } from "zustand/shallow";
+import { cn, injectValueInList, isStringArray } from "@/lib/utils";
+import React from "react";
+import { useTransformOptions } from "../../core/hooks/useTransformOptions";
 
-interface TGenericOptions {
+export interface TGenericOptions {
   id?: number;
   name: string;
 }
 
-interface IAbstractDateProps<T> {
+export interface IAbstractSelectProps<T> {
   label: string;
   placeholder: string;
   options: T[];
   value?: T;
+  className?: string;
+  name: string;
 }
 
 export const WSelect = <
-  TInput extends TGenericOptions,
+  TInput extends TGenericOptions | string,
   TFieldValues extends FieldValues = any,
   TName extends FieldPath<TFieldValues> = any
 >(
   props: {
     name: TName;
-  } & IAbstractDateProps<TInput>
+  } & IAbstractSelectProps<TInput>
 ) => {
-  const { name, label, placeholder, options, value } = props;
+  const { name, label, options: _options, className } = props;
+
+  const isPlainOptions = isStringArray(_options);
+
   const { form } = useFormStore(
     useShallow((state) => ({
       form: state.form,
     }))
   );
+  const options = useTransformOptions(props, form);
 
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => {
-        const onChangeHandler = (value: string) =>
-          field.onChange(options.find(({ id }) => `${id}` === value));
+        const onChangeHandler = (value: string) => {
+          if (isPlainOptions) {
+            field.onChange(value);
+          } else {
+            field.onChange(
+              (options as TGenericOptions[]).find(({ id }) => `${id}` === value)
+            );
+          }
+        };
 
         return (
-          <FormItem>
+          <FormItem className={cn(className)}>
             <FormLabel>{label}</FormLabel>
             <Select
               onValueChange={onChangeHandler}
@@ -77,11 +87,21 @@ export const WSelect = <
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {(options || []).map((option) => (
-                  <SelectItem key={option.id} value={`${option.id}`}>
-                    {option.name}
-                  </SelectItem>
-                ))}
+                {(options || []).map((option) => {
+                  if (typeof option === "string") {
+                    return (
+                      <SelectItem key={option} value={`${option}`}>
+                        {option}
+                      </SelectItem>
+                    );
+                  }
+
+                  return (
+                    <SelectItem key={option.id} value={`${option.id}`}>
+                      {option.name}
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
 

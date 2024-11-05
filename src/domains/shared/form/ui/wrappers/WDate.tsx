@@ -32,6 +32,7 @@ import { es } from "date-fns/locale";
 interface IAbstractDateProps {
   label: string;
   placeholder?: string;
+  className?: string;
 }
 
 export const WDate = <
@@ -42,7 +43,7 @@ export const WDate = <
     name: TName;
   } & IAbstractDateProps
 ) => {
-  const { name, label, placeholder } = props;
+  const { name, label, placeholder, className } = props;
   const { form } = useFormStore(
     useShallow((state) => ({
       form: state.form,
@@ -61,7 +62,7 @@ export const WDate = <
         };
 
         return (
-          <FormItem className="flex flex-col w-full">
+          <FormItem className={cn("flex flex-col w-full", className)}>
             <FormLabel>{label}</FormLabel>
             <Popover>
               <PopoverTrigger asChild>
@@ -78,7 +79,7 @@ export const WDate = <
                       format(field.value, "P", { locale: es })
                     ) : (
                       // format(field.value, "P", { locale: es })
-                      <span>{placeholder || "Seleccione una fecha"}</span>
+                      <span>{placeholder || ""}</span>
                     )}
                     <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                   </Button>

@@ -13,10 +13,10 @@ const actionsConfig: IActionsConfig<ICost> = {
   delete: {
     action: deleteCost,
     onSuccess: {
-      message: "Proyecto eliminado satisfactoriamente",
+      message: "Centro de costos eliminado satisfactoriamente",
     },
   },
-  editLink: "/hub/projects/:id",
+  editLink: "/hub/costs/:id",
 };
 
 export const WCostsTable = ({ costs }: IWCostsTablesProps) => {

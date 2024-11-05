@@ -1,7 +1,10 @@
 "use client";
 
+import { Switch } from "@/components/ui/switch";
+
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,12 +20,10 @@ import { cn } from "@/lib/utils";
 
 interface IAbstractInputProps {
   label: string;
-  placeholder?: string;
-  type?: string;
   className?: string;
 }
 
-export const WInput = <
+export const WSwitch = <
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>
 >(
@@ -30,7 +31,7 @@ export const WInput = <
     name: TName;
   } & IAbstractInputProps
 ) => {
-  const { name, label, placeholder, type = "",className } = props;
+  const { name, label, className } = props;
 
   const { form } = useFormStore(
     useShallow((state) => ({
@@ -40,15 +41,14 @@ export const WInput = <
 
   return (
     <FormField
-      control={form.control || null}
+      control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className={cn(className)}>
-          <FormLabel>{label}</FormLabel>
+        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 align-middle">
+          <FormLabel className="mr-4" >{label}</FormLabel>
           <FormControl>
-            <Input type={type} placeholder={placeholder || ""} {...field} />
+            <Switch checked={field.value} onCheckedChange={field.onChange} />
           </FormControl>
-          <FormMessage />
         </FormItem>
       )}
     />

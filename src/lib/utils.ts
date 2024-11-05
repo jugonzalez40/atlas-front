@@ -24,9 +24,9 @@ export function deepMerge(target: any, ...sources: any[]): any {
   if (!sources.length) return target;
   const source = sources.shift();
 
-  if (typeof target === 'object' && typeof source === 'object') {
+  if (typeof target === "object" && typeof source === "object") {
     for (const key in source) {
-      if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
+      if (typeof source[key] === "object" && !Array.isArray(source[key])) {
         if (!target[key]) target[key] = {};
         deepMerge(target[key], source[key]);
       } else {
@@ -36,4 +36,15 @@ export function deepMerge(target: any, ...sources: any[]): any {
   }
 
   return deepMerge(target, ...sources);
+}
+
+export function isStringArray(value: unknown): value is string[] {
+  return (
+    Array.isArray(value) && value.every((item) => typeof item === "string")
+  );
+}
+
+export function injectValueInList(list: string[], value: string) {
+  if (list.includes(value)) return list;
+  return [value, ...list];
 }

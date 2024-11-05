@@ -30,7 +30,12 @@ class AuthServiceClass {
     const isExpired = decoded.exp < currentTime;
 
     // 3. check if jwt is expired
-    return !isExpired;
+    if (isExpired) {
+      console.log("JWT Token is expired");
+      return false;
+    }
+
+    return true;
   }
 
   public login(authOutput: IAuthOutput) {

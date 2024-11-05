@@ -10,6 +10,7 @@ import logo from "../../../public/atlas.png";
 import heroBack from "../../../public/back.webp";
 import dynamic from "next/dynamic";
 import { LoginFormSkeleton } from "@/domains/login/ui/components/LoginFormSkeleton";
+import AtlasPowered from "../../../public/logo_v1.png";
 
 const WLoginForm = dynamic(
   () => import("@/domains/login/ui/wrappers/WLoginForm"),
@@ -45,11 +46,18 @@ export default async function Login() {
         <CardHeader className="items-center">
           <Image
             alt="Atlas logo"
-            src={logo}
+            src={AtlasPowered}
             width={170}
             height={170}
-            className="mb-12"
+            className="cursor-pointer"
           />
+          {/* <Image
+            alt="Atlas logo"
+            src={logo}
+            width={80}
+            height={80}
+            className="mb-12"
+          /> */}
         </CardHeader>
         <CardHeader>
           <CardTitle>Login</CardTitle>

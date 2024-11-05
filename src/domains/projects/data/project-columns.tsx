@@ -20,6 +20,7 @@ import { useFetch } from "@/hooks/useFetch";
 import { useToast } from "@/hooks/useToast";
 import { TFormData } from "../ui/wrappers/WProjectForm";
 import { IClient } from "@/domains/clients/data/client-columns";
+import { buildEntityCell } from "@/domains/shared/data-table/core/use-cases/buildEntityCell";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -39,7 +40,6 @@ const formatDate = (date: string) => {
 };
 
 export const projectColumns: ColumnDef<IProject>[] = [
-
   {
     accessorKey: "contractNumber",
     header: "Numero de contrato",
@@ -47,10 +47,7 @@ export const projectColumns: ColumnDef<IProject>[] = [
   {
     accessorKey: "client",
     header: "Cliente",
-    cell: ({ row }) => {
-      const client = row.getValue("client") as IClient;
-      return <div className="font-medium">{client.name}</div>;
-    },
+    cell: (props) => buildEntityCell<IProject>("client", "name", props),
   },
   {
     accessorKey: "goal",

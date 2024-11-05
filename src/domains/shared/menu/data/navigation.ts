@@ -39,4 +39,16 @@ export const NAVIGATION_MAP = [
     url: "/hub/costs/*",
     title: "Editar centro de costos",
   },
+  {
+    url: "/hub/machines",
+    title: "Maquinaria",
+  },
+  {
+    url: "/hub/machines/add",
+    title: "Nueva maquina",
+  },
+  {
+    url: "/hub/machines/*",
+    title: "Editar maquina",
+  },
 ];
