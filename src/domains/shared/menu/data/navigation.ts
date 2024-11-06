@@ -1,3 +1,4 @@
+
 export const NAVIGATION_MAP = [
   {
     url: "/hub",
@@ -50,5 +51,17 @@ export const NAVIGATION_MAP = [
   {
     url: "/hub/machines/*",
     title: "Editar maquina",
+  },
+  {
+    url: "/hub/users",
+    title: "Usuarios",
+  },
+  {
+    url: "/hub/users/add",
+    title: "Nuevo usuario",
+  },
+  {
+    url: "/hub/users/*",
+    title: "Nuevo usuario",
   },
 ];
