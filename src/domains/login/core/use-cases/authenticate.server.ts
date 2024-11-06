@@ -2,7 +2,7 @@
 
 import { AuthService } from "@/services/AuthService";
 import { RequestService } from "@/services/RequestService";
-import { encryptPassword } from "./encryptCredentials";
+// import { encryptPassword } from "./encryptCredentials";
 
 export interface IAuthInput {
   email: string;
@@ -28,7 +28,7 @@ export interface IAuthOutput {
 }
 
 const transformCredentials = (input: IAuthInput): IAuthInput => {
-  const password = encryptPassword(input.password);
+  // const password = encryptPassword(input.password);
 
   return {
     ...input,
