@@ -1,8 +1,9 @@
 "use server";
 
-import { IClient } from "@/domains/clients/data/client-columns";
+
 import { RequestService } from "@/services/RequestService";
 import { revalidatePath } from "next/cache";
+import { IClient } from "../../ui/wrappers/WClientForm";
 
 export interface IClientInput extends Omit<IClient, "id"> {}
 

@@ -1,7 +1,6 @@
 import { PageTitle } from "@/components/ui/page-title";
 import { getClient } from "@/domains/clients/core/use-cases/getClient";
-import WClientForm from "@/domains/clients/ui/wrappers/WClientForm";
-import { IClient } from "@/domains/clients/data/client-columns";
+import WClientForm, { IClient } from "@/domains/clients/ui/wrappers/WClientForm";
 
 interface IEditClientPageProps {
   params: {

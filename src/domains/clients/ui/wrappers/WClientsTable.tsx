@@ -2,8 +2,9 @@ import {
   IActionsConfig,
   WDataTable,
 } from "@/domains/shared/data-table/ui/wrappers/WDataTable";
-import { clientColumns, IClient } from "@/domains/clients/data/client-columns";
+import { clientColumns } from "@/domains/clients/data/client-columns";
 import { deleteClient } from "../../core/use-cases/deleteClient.server";
+import { IClient } from "./WClientForm";
 
 interface IWClientTablesProps {
   clients: IClient[];

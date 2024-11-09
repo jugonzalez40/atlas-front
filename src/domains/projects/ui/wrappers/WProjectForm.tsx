@@ -15,11 +15,11 @@ import { useToast } from "@/hooks/useToast";
 import { redirect } from "next/navigation";
 import { Save } from "lucide-react";
 import { editProject } from "../../core/use-cases/editProject.server";
-import { formSchema as clientFormSchema } from "@/domains/clients/ui/wrappers/WClientForm";
+import { clientFormSchema as clientFormSchema, IClient } from "@/domains/clients/ui/wrappers/WClientForm";
 import { WTextarea } from "@/domains/shared/form/ui/wrappers/WTextarea";
 import { WDate } from "@/domains/shared/form/ui/wrappers/WDate";
 import { WSelect } from "@/domains/shared/form/ui/wrappers/WSelect";
-import { IClient } from "@/domains/clients/data/client-columns";
+
 import { useCrudHandler } from "@/hooks/useCrudHandler";
 
 export interface IProjectsOutput {

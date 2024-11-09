@@ -19,8 +19,9 @@ import { useFetch } from "@/hooks/useFetch";
 
 import { useToast } from "@/hooks/useToast";
 import { TFormData } from "../ui/wrappers/WProjectForm";
-import { IClient } from "@/domains/clients/data/client-columns";
+
 import { buildEntityCell } from "@/domains/shared/data-table/core/use-cases/buildEntityCell";
+import { IClient } from "@/domains/clients/ui/wrappers/WClientForm";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
