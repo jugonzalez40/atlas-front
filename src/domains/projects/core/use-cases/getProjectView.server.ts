@@ -1,6 +1,7 @@
 "use server";
 
-import { IClient } from "@/domains/clients/data/client-columns";
+
+import { IClient } from "@/domains/clients/ui/wrappers/WClientForm";
 import { IProject } from "@/domains/projects/data/project-columns";
 
 import { RequestService } from "@/services/RequestService";
