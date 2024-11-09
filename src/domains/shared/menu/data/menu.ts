@@ -46,14 +46,6 @@ const MENU_TREE: IMenuItem[] = [
   },
 
   {
-    id: "OPERATORS_VIEW",
-    title: "Operarios",
-    url: "/hub/operators",
-    permissionId: "operator_view",
-    icon: BookUser,
-  },
-
-  {
     id: "CLIENTS_VIEW",
     title: "Clientes",
     url: "/hub/clients",
@@ -67,6 +59,14 @@ const MENU_TREE: IMenuItem[] = [
     url: "/hub/costs",
     permissionId: "cost_view",
     icon: HandCoins,
+  },
+
+  {
+    id: "USERS_VIEW",
+    title: "Usuarios",
+    url: "/hub/users",
+    permissionId: "user_view",
+    icon: BookUser,
   },
 ];
 export { MENU_TREE };

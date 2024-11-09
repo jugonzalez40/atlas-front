@@ -1,5 +1,6 @@
 "use server";
 
+import { IRole } from "@/domains/users/data/user-entites";
 import { AuthService } from "@/services/AuthService";
 import { RequestService } from "@/services/RequestService";
 // import { encryptPassword } from "./encryptCredentials";
@@ -12,12 +13,6 @@ export interface IAuthInput {
 export interface IUser {
   id: string;
   email: string;
-}
-
-export interface IRole {
-  id: string;
-  name: string;
-  description: string;
 }
 
 export interface IAuthOutput {

@@ -20,6 +20,7 @@ interface IAbstractInputProps {
   placeholder?: string;
   type?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 export const WInput = <
@@ -30,7 +31,8 @@ export const WInput = <
     name: TName;
   } & IAbstractInputProps
 ) => {
-  const { name, label, placeholder, type = "",className } = props;
+  const { name, label, placeholder, type = "", className, disabled } = props;
+  console.log(name, disabled);
 
   const { form } = useFormStore(
     useShallow((state) => ({
@@ -41,12 +43,18 @@ export const WInput = <
   return (
     <FormField
       control={form.control || null}
+      disabled={disabled}
       name={name}
       render={({ field }) => (
-        <FormItem className={cn(className)}>
+        <FormItem className={cn(className, "w-full")}>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input type={type} placeholder={placeholder || ""} {...field} />
+            <Input
+              disabled={disabled}
+              type={type}
+              placeholder={placeholder || ""}
+              {...field}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>

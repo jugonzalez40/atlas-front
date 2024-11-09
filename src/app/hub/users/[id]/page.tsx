@@ -1,6 +1,6 @@
 import { PageTitle } from "@/components/ui/page-title";
-import { getUser } from "@/domains/users/core/use-cases/getUser";
-import WUserForm, { IUser } from "@/domains/users/ui/wrappers/WUserForm";
+import { getUserEditView } from "@/domains/users/core/use-cases/getUserEditView.server";
+import WUserForm from "@/domains/users/ui/wrappers/WUserForm";
 
 interface IEditUserPageProps {
   params: {
@@ -9,12 +9,13 @@ interface IEditUserPageProps {
 }
 
 export default async function EditUserPage({ params }: IEditUserPageProps) {
-  const user = (await getUser(params)).data || ({} as IUser);
+  const { data } = await getUserEditView(params.id);
+  if (!data) return;
 
   return (
     <div className="mt-6">
       <PageTitle>Editar usuario</PageTitle>
-      {/* <WUserForm user={user} /> */}
+      <WUserForm {...data} />
     </div>
   );
 }

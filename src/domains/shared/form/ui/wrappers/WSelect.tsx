@@ -34,6 +34,7 @@ export interface IAbstractSelectProps<T> {
   value?: T;
   className?: string;
   name: string;
+  disabled?: boolean
 }
 
 export const WSelect = <
@@ -45,7 +46,7 @@ export const WSelect = <
     name: TName;
   } & IAbstractSelectProps<TInput>
 ) => {
-  const { name, label, options: _options, className } = props;
+  const { name, label, options: _options, className, disabled } = props;
 
   const isPlainOptions = isStringArray(_options);
 
@@ -58,6 +59,7 @@ export const WSelect = <
 
   return (
     <FormField
+      disabled={disabled}
       control={form.control}
       name={name}
       render={({ field }) => {
@@ -75,6 +77,7 @@ export const WSelect = <
           <FormItem className={cn(className)}>
             <FormLabel>{label}</FormLabel>
             <Select
+              disabled={disabled}
               onValueChange={onChangeHandler}
               // defaultValue={valueSetter}
               // value={valueSetter}

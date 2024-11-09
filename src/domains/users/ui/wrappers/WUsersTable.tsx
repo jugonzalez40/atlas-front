@@ -4,7 +4,7 @@ import {
 } from "@/domains/shared/data-table/ui/wrappers/WDataTable";
 import { userColumns } from "@/domains/users/data/user-columns";
 import { deleteUser } from "../../core/use-cases/deleteUser.server";
-import { IUser } from "./WUserForm";
+import { IUser } from "../../data/user-entites";
 
 interface IWUserTablesProps {
   users: IUser[];
@@ -16,7 +16,7 @@ const actionsConfig: IActionsConfig<IUser> = {
       message: "Usere eliminado satisfactoriamente",
     },
   },
-  editLink: "/hub/user/:id",
+  editLink: "/hub/users/:id",
 };
 
 export const WUsersTable = ({ users }: IWUserTablesProps) => {

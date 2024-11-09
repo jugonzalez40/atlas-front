@@ -27,7 +27,6 @@ import { WSwitch } from "@/domains/shared/form/ui/wrappers/WSwitch";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
-
 export interface IWMachineFormProps {
   machinery?: IMachine;
   classes: IMachineType[];
@@ -287,8 +286,6 @@ export const WMachineForm = ({
             <Label htmlFor="airplane-mode">Airplane Mode</Label>
             </div>
             */}
-
-
         </div>
 
         <WSubmit text="Guardar" className="w-fit" icon={<Save size={15} />} />

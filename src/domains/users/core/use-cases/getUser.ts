@@ -1,8 +1,7 @@
 "use server";
 
-
 import { RequestService } from "@/services/RequestService";
-import { IUser } from "../../ui/wrappers/WUserForm";
+import { IUser } from "../../data/user-entites";
 
 export interface IGetUserInput {
   id: string;
