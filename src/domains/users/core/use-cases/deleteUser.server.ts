@@ -3,7 +3,8 @@
 
 import { RequestService } from "@/services/RequestService";
 import { revalidatePath } from "next/cache";
-import { IUser } from "../../ui/wrappers/WUserForm";
+import { IUser } from "../../data/user-entites";
+
 
 export interface IUserInput extends IUser {}
 
