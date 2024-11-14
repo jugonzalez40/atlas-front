@@ -1,9 +1,5 @@
-import {
-  IActionsConfig,
-  WDataTable,
-} from "@/domains/shared/data-table/ui/wrappers/WDataTable";
-import { requestColumns } from "@/domains/requests/data/request-columns";
-import { deleteRequest } from "../../core/use-cases/deleteRequest.server";
+"use client";
+
 import { IRequest } from "./WRequestForm";
 
 import { RequestItem } from "../components/RequestItem";
@@ -22,7 +18,7 @@ export const WRequestsList = () => {
   return (
     <div>
       {(requests || []).map((request) => (
-        <RequestItem key={request.id} {...request} />
+        <RequestItem key={request.id} {...request} className="mb-6" />
       ))}
     </div>
   );

@@ -12,8 +12,15 @@ import { addRequest } from "../../core/use-cases/addRequest.server";
 import { Save } from "lucide-react";
 import { editRequest } from "../../core/use-cases/editRequest.server";
 import { useCrudHandler } from "../../../../hooks/useCrudHandler";
-import { projectSchema } from "@/domains/projects/ui/wrappers/WProjectForm";
-import { machineClassSchema } from "@/domains/machines/data/machine-entities";
+import {
+  IProject,
+  projectSchema,
+} from "@/domains/projects/ui/wrappers/WProjectForm";
+import {
+  IMachineClass,
+  machineClassSchema,
+} from "@/domains/machines/data/machine-entities";
+import { WSelect } from "@/domains/shared/form/ui/wrappers/WSelect";
 
 export interface IRequestsOutput {
   requests: IRequest[];
@@ -32,37 +39,45 @@ export const requestFormSchema = z.object({
   machineClass: machineClassSchema,
 });
 
+const defaultRequestValues = {
+  date: null,
+  status: {},
+  project: {},
+  machineClass: {},
+};
+
 export type IRequest = z.infer<typeof requestFormSchema>;
 export type IRequestStatus = z.infer<typeof requestStatusSchema>;
 
 interface IWRequestFormProps {
   request?: IRequest;
+  projects: IProject[];
+  machineClasses: IMachineClass[];
 }
 
-export const WRequestForm = ({ request }: IWRequestFormProps) => {
+export const WRequestForm = ({
+  request,
+  projects,
+  machineClasses,
+}: IWRequestFormProps) => {
   const { add, edit } = useCrudHandler<IRequest>({
     add: {
       action: addRequest,
       onSuccess: {
-        message: "👍 Requeste guardado satisfactoriamente",
+        message: "👍 Solicitud guardada satisfactoriamente",
       },
     },
     edit: {
       action: editRequest,
       onSuccess: {
-        message: "👍 Requeste modificado satisfactoriamente",
+        message: "👍 Solicitud modificada satisfactoriamente",
       },
     },
   });
 
   const form = useForm<IRequest>({
     resolver: zodResolver(requestFormSchema),
-    defaultValues: request || {
-      date: null,
-      status: {},
-      project: {},
-      machineClass: {},
-    },
+    defaultValues: request || defaultRequestValues,
   });
 
   useFormManager(form);
@@ -76,10 +91,21 @@ export const WRequestForm = ({ request }: IWRequestFormProps) => {
     <WForm<IRequest> onSubmit={onSubmitHandler}>
       <div className="flex flex-col">
         <div className="flex-auto mb-5">
-          <WInput name="nit" label="NIT" placeholder="1234567-8" />
+          <WSelect<IProject>
+            name="project"
+            label="Proyecto"
+            keyValue="contractNumber"
+            placeholder="Seleccione un proyecto"
+            options={projects}
+          />
         </div>
         <div className="flex-auto mb-5">
-          <WInput name="name" label="Nombre" />
+          <WSelect<IMachineClass>
+            name="machineClass"
+            label="Tipo de maquina"
+            placeholder="Seleccione un tipo de maquina"
+            options={machineClasses}
+          />
         </div>
         <WSubmit text="Guardar" className="w-fit" icon={<Save size={15} />} />
       </div>

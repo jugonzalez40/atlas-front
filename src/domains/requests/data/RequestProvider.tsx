@@ -24,6 +24,7 @@ export const RequestStoreProvider = ({
     storeRef.current = createRequestStore({
       requests,
       initialRequests: requests,
+      filters: {},
     });
   }
 

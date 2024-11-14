@@ -23,7 +23,7 @@ export default async function RequestsPage() {
       <PageTitle>Solicitudes</PageTitle>
       <div className="mt-6">
         <RequestStoreProvider requests={requests}>
-          <WRequestsFilter {...filters} />
+          <WRequestsFilter {...filters} className="mb-6" />
           <WRequestsList />
           <Button asChild className="mt-6">
             <Link href="/hub/requests/add">

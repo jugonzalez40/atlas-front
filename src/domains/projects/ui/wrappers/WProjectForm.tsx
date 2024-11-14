@@ -7,15 +7,16 @@ import { WForm } from "../../../shared/form/ui/wrappers/WForm";
 import { WInput } from "../../../shared/form/ui/wrappers/WInput";
 import { WSubmit } from "../../../shared/form/ui/wrappers/WSubmit";
 
-import { useFetch } from "@/hooks/useFetch";
 import { useFormManager } from "@/domains/shared/form/core/hooks/useFormManager";
-import { IProject } from "@/domains/projects/data/project-columns";
 import { addProject } from "../../core/use-cases/addProject.server";
 import { useToast } from "@/hooks/useToast";
 import { redirect } from "next/navigation";
 import { Save } from "lucide-react";
 import { editProject } from "../../core/use-cases/editProject.server";
-import { clientFormSchema as clientFormSchema, IClient } from "@/domains/clients/ui/wrappers/WClientForm";
+import {
+  clientFormSchema as clientFormSchema,
+  IClient,
+} from "@/domains/clients/ui/wrappers/WClientForm";
 import { WTextarea } from "@/domains/shared/form/ui/wrappers/WTextarea";
 import { WDate } from "@/domains/shared/form/ui/wrappers/WDate";
 import { WSelect } from "@/domains/shared/form/ui/wrappers/WSelect";
@@ -35,7 +36,7 @@ export const projectSchema = z.object({
   client: clientFormSchema,
 });
 
-export type TFormData = z.infer<typeof projectSchema>;
+export type IProject = z.infer<typeof projectSchema>;
 
 interface IWProjectFormProps {
   project?: IProject;
@@ -43,7 +44,7 @@ interface IWProjectFormProps {
 }
 
 export const WProjectForm = ({ project, clients }: IWProjectFormProps) => {
-  const { add, edit } = useCrudHandler<TFormData>({
+  const { add, edit } = useCrudHandler<IProject>({
     add: {
       action: addProject,
       onSuccess: {
@@ -58,7 +59,7 @@ export const WProjectForm = ({ project, clients }: IWProjectFormProps) => {
     },
   });
 
-  const form = useForm<TFormData>({
+  const form = useForm<IProject>({
     resolver: zodResolver(projectSchema),
     defaultValues:
       project ||
@@ -73,13 +74,13 @@ export const WProjectForm = ({ project, clients }: IWProjectFormProps) => {
 
   useFormManager(form);
 
-  const onSubmitHandler = async (values: TFormData) => {
+  const onSubmitHandler = async (values: IProject) => {
     if (project) edit(values);
     else add(values);
   };
 
   return (
-    <WForm<TFormData> onSubmit={onSubmitHandler}>
+    <WForm<IProject> onSubmit={onSubmitHandler}>
       <div className="flex flex-col">
         <div className="flex-auto mb-5">
           <WInput

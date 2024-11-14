@@ -9,7 +9,7 @@ export const REQUESTS_STATUS: IRequestStatus[] = [
   {
     id: "ASIGNADA",
     name: "Asignada",
-    color: "#bef264",
+    color: "#ecfccb",
   },
   {
     id: "CERRADA",

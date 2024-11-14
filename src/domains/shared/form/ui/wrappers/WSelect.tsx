@@ -24,7 +24,7 @@ import { useTransformOptions } from "../../core/hooks/useTransformOptions";
 
 export interface TGenericOptions {
   id?: number;
-  name: string;
+  name?: string;
 }
 
 export interface IAbstractSelectProps<T> {
@@ -34,7 +34,8 @@ export interface IAbstractSelectProps<T> {
   value?: T;
   className?: string;
   name: string;
-  disabled?: boolean
+  disabled?: boolean;
+  keyValue?: keyof T;
 }
 
 export const WSelect = <
@@ -46,7 +47,14 @@ export const WSelect = <
     name: TName;
   } & IAbstractSelectProps<TInput>
 ) => {
-  const { name, label, options: _options, className, disabled } = props;
+  const {
+    name,
+    label,
+    options: _options,
+    className,
+    disabled,
+    keyValue = "name",
+  } = props;
 
   const isPlainOptions = isStringArray(_options);
 
@@ -85,7 +93,7 @@ export const WSelect = <
               <FormControl>
                 <SelectTrigger>
                   <SelectValue
-                    placeholder={field.value?.name || "Seleccione un valor"}
+                    placeholder={field.value[keyValue] || "Seleccione un valor"}
                   />
                 </SelectTrigger>
               </FormControl>
@@ -101,7 +109,7 @@ export const WSelect = <
 
                   return (
                     <SelectItem key={option.id} value={`${option.id}`}>
-                      {option.name}
+                      {option[keyValue]}
                     </SelectItem>
                   );
                 })}

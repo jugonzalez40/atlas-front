@@ -18,7 +18,7 @@ import { deleteProject } from "../core/use-cases/deleteProject.server";
 import { useFetch } from "@/hooks/useFetch";
 
 import { useToast } from "@/hooks/useToast";
-import { TFormData } from "../ui/wrappers/WProjectForm";
+import { IProject } from "../ui/wrappers/WProjectForm";
 
 import { buildEntityCell } from "@/domains/shared/data-table/core/use-cases/buildEntityCell";
 import { IClient } from "@/domains/clients/ui/wrappers/WClientForm";

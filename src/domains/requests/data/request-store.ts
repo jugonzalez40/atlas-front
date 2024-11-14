@@ -14,7 +14,7 @@ export type TRequestState = {
 export type TRequestActions = {
   setRequests: (requests: IRequest[]) => void;
   setInitialRequests: (requests: IRequest[]) => void;
-  setFilters: (_filters: Partial<IRequestFilter>) => void;
+  setFilters: (_filters: Partial<IRequestFilter>, override?: boolean) => void;
 };
 
 export type TRequestStore = TRequestState & TRequestActions;
@@ -31,12 +31,14 @@ export const createRequestStore = (
     ...initState,
     setRequests: (requests) => set({ requests }),
     setInitialRequests: (requests) => set({ requests }),
-    setFilters: (_filters: Partial<IRequestFilter>) => {
-      const { filters, requests } = get();
-      const newFilters = deepMerge(filters, _filters);
-      const newRequests = [...applyFilters(newFilters, requests)];
+    setFilters: (_filters: Partial<IRequestFilter>, override = false) => {
+      const { filters, initialRequests } = get();
+      const newFilters = override
+        ? _filters
+        : deepMerge(filters, _filters);
+      const newRequests = [...applyFilters(newFilters, initialRequests)];
       set({
-        filters: newFilters,
+        filters: {...newFilters},
         requests: newRequests,
       });
     },

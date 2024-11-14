@@ -6,14 +6,14 @@ export const applyFilters = (
   requests: IRequest[]
 ): IRequest[] => {
   const statusFilter = (request: IRequest) =>
-    !filters.status || request.status.id === filters.status.id;
+    !filters?.status || request.status.id === filters.status.id;
 
   const machineClassFilter = (request: IRequest) =>
-    !filters.machineClass ||
+    !filters?.machineClass ||
     request.machineClass.id === filters.machineClass.id;
 
   const projectFilter = (request: IRequest) =>
-    !filters.project || request.project.id === filters.project.id;
+    !filters?.project || request.project.id === filters.project.id;
 
   return requests
     .filter(statusFilter)

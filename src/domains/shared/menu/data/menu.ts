@@ -24,7 +24,7 @@ const MENU_TREE: IMenuItem[] = [
   {
     id: "REQUESTS_VIEW",
     title: "Solicitudes",
-    url: "/hub/request",
+    url: "/hub/requests",
     permissionId: "request_view",
     icon: ArchiveRestore,
   },

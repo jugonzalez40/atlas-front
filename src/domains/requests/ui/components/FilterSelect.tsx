@@ -1,5 +1,6 @@
 "use client";
 
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -7,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 export interface IGenericOption {
   id?: number | string;
@@ -15,34 +17,41 @@ export interface IGenericOption {
 
 export interface IFilterSelectProps<T extends IGenericOption> {
   options: T[];
-  placeholder: string;
-  key?: keyof T;
+  label: string;
+  valueKey?: keyof T;
   onChange: (value?: T) => void;
+  className?: string;
+  value?: string | number;
 }
 
 export const FilterSelect = <T extends IGenericOption>({
   options,
-  placeholder,
-  key = "name",
+  label,
+  valueKey = "name",
   onChange,
+  className,
+  value,
 }: IFilterSelectProps<T>) => {
   const onChangeHandler = (value: string) => {
-    const obj = options.find((option) => option.id === value);
+    const obj = options.find((option) => String(option.id) === String(value));
     onChange(obj);
   };
 
   return (
-    <Select onValueChange={onChangeHandler}>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder={placeholder} />
-      </SelectTrigger>
-      <SelectContent>
-        {options.map((option) => (
-          <SelectItem key={option.id} value={String(option.id)}>
-            {option[key] as string}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className={cn("w-full", className)}>
+      <Label>{label}</Label>
+      <Select onValueChange={onChangeHandler} value={String(value)}>
+        <SelectTrigger className="w-full">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem key={option.id} value={String(option.id)}>
+              {option[valueKey] as string}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
