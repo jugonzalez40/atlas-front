@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/popover";
 import { useFormStore } from "../../core/hooks/useFormStore";
 import { useShallow } from "zustand/shallow";
-import { formSchema } from "@/domains/projects/ui/wrappers/WProjectForm";
+import { projectSchema } from "@/domains/projects/ui/wrappers/WProjectForm";
 import { es } from "date-fns/locale";
 
 interface IAbstractDateProps {

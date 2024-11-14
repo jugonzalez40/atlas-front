@@ -26,7 +26,7 @@ export interface IProjectsOutput {
   projects: IProject[];
 }
 
-export const formSchema = z.object({
+export const projectSchema = z.object({
   id: z.number().optional(),
   contractNumber: z.string().min(1, "requerido"),
   goal: z.string().min(1, "requerido"),
@@ -35,7 +35,7 @@ export const formSchema = z.object({
   client: clientFormSchema,
 });
 
-export type TFormData = z.infer<typeof formSchema>;
+export type TFormData = z.infer<typeof projectSchema>;
 
 interface IWProjectFormProps {
   project?: IProject;
@@ -59,7 +59,7 @@ export const WProjectForm = ({ project, clients }: IWProjectFormProps) => {
   });
 
   const form = useForm<TFormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(projectSchema),
     defaultValues:
       project ||
       ({

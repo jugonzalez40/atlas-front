@@ -19,7 +19,7 @@ import {
   IColor,
   IMachine,
   IMachineStatus,
-  IMachineType,
+  IMachineClass,
   ISupplier,
   machineDefaultValues,
 } from "../../data/machine-entities";
@@ -29,7 +29,7 @@ import { Label } from "@/components/ui/label";
 
 export interface IWMachineFormProps {
   machinery?: IMachine;
-  classes: IMachineType[];
+  classes: IMachineClass[];
   suppliers: ISupplier[];
   statuses: IMachineStatus[];
   colors: string[];
@@ -93,7 +93,7 @@ export const WMachineForm = ({
         </div>
 
         <div className=" mb-5 sm:flex-column flex md:flex-row">
-          <WSelect<IMachineType>
+          <WSelect<IMachineClass>
             name="machineClass"
             label="Tipo de maquina"
             placeholder="Seleccione el tipo de maquina"

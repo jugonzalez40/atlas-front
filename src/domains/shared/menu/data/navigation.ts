@@ -64,4 +64,16 @@ export const NAVIGATION_MAP = [
     url: "/hub/users/*",
     title: "Nuevo usuario",
   },
+  {
+    url: "/hub/requests",
+    title: "Solicitudes",
+  },
+  {
+    url: "/hub/requests/add",
+    title: "Nueva solicitud",
+  },
+  {
+    url: "/hub/requests/*",
+    title: "Editar solicitud",
+  },
 ];

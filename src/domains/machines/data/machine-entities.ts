@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export type IMachine = z.infer<typeof machineFormSchema>;
-export type IMachineType = z.infer<typeof machineTypeSchema>;
+export type IMachineClass = z.infer<typeof machineClassSchema>;
 export type ISupplier = z.infer<typeof supplierSchema>;
 export type IMachineStatus = z.infer<typeof machineStatusSchema>;
 export type IColor = {
@@ -13,7 +13,7 @@ export interface IMachinesOutput {
   machines: IMachine[];
 }
 
-export const machineTypeSchema = z.object({
+export const machineClassSchema = z.object({
   name: z.string(),
   id: z.number().optional(),
 });
@@ -31,7 +31,7 @@ export const machineStatusSchema = z.object({
 
 export const machineFormSchema = z.object({
   id: z.number().optional(),
-  machineClass: machineTypeSchema,
+  machineClass: machineClassSchema,
   supplier: supplierSchema,
   status: machineStatusSchema,
   registrationNumber: z.string().min(1, "Requerido").nullable(),
