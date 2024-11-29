@@ -7,7 +7,7 @@ export type TAuthState = {
 };
 
 export type TAuthActions = {
-  setUserMetadata: (from: any) => void;
+  setUserMetadata: (userMetadata: IAuthOutput) => void;
 };
 
 export type TAuthStore = TAuthState & TAuthActions;
@@ -19,6 +19,6 @@ export const defaultInitState: TAuthState = {
 export const createAuthStore = (initState: TAuthState = defaultInitState) => {
   return createStore<TAuthStore>()((set) => ({
     ...initState,
-    setUserMetadata: (userMetadata) => set({ userMetadata }),
+    setUserMetadata: (userMetadata: IAuthOutput) => set({ userMetadata }),
   }));
 };

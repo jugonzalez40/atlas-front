@@ -2,13 +2,13 @@
 
 import { RequestService } from "@/services/RequestService";
 import { IRequest } from "../../ui/wrappers/WRequestForm";
+import { IProject } from "@/domains/projects/ui/wrappers/WProjectForm";
+import { IMachineClass } from "@/domains/machines/data/machine-entities";
 
-
-export interface IGetRequestInput {
-  id: string;
+export interface IGetRequestOuput {
+  projects: IProject[];
+  machineryClasses: IMachineClass[];
 }
-
-export interface IGetRequestOuput extends IRequest {}
 
 export async function getRequestAddView() {
   const result = await RequestService.fetch<IGetRequestOuput>(

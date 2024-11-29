@@ -9,11 +9,12 @@ import Image from "next/image";
 import logo from "../../../public/atlas.png";
 import heroBack from "../../../public/back.webp";
 import dynamic from "next/dynamic";
-import { LoginFormSkeleton } from "@/domains/login/ui/components/LoginFormSkeleton";
+
 import AtlasPowered from "../../../public/logo_v1.png";
+import { LoginFormSkeleton } from "@/domains/shared/auth/ui/components/LoginFormSkeleton";
 
 const WLoginForm = dynamic(
-  () => import("@/domains/login/ui/wrappers/WLoginForm"),
+  () => import("@/domains/shared/auth/ui/wrappers/WLoginForm"),
   { loading: () => <LoginFormSkeleton />, ssr: false }
 );
 

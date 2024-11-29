@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 import { PageTitle } from "@/components/ui/page-title";
 import { getProjects } from "@/domains/projects/core/use-cases/getProjects";
+import { WAddLink } from "@/domains/shared/auth/ui/wrappers/WAtlasLinks";
 
 export default async function ProjectsPage() {
   const projects = (await getProjects()).data || [];
@@ -16,12 +17,7 @@ export default async function ProjectsPage() {
       <PageTitle>Proyectos</PageTitle>
       <div className="mt-6">
         <WProjectsTable projects={projects} />
-        <Button asChild className="mt-6">
-          <Link href="/hub/projects/add">
-            <Plus />
-            Agregar
-          </Link>
-        </Button>
+        <WAddLink />
       </div>
     </div>
   );

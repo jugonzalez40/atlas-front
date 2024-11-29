@@ -5,15 +5,9 @@ import "../globals.css";
 import { FormStoreProvider } from "@/domains/shared/form/data/FormStoreProvider";
 import { init } from "@/services/init";
 import { Toaster } from "@/components/ui/toaster";
-import { cookies } from "next/headers";
-import { ConfigService } from "@/services/ConfigService";
-import { AuthService } from "@/services/AuthService";
-import { AuthStoreProvider } from "@/domains/login/data/AuthStoreProvider";
-import { LoadingComponent } from "@/components/ui/loading";
 
-if (process.env.NEXT_RUNTIME === "nodejs") {
-  // init();
-}
+import { LoadingComponent } from "@/components/ui/loading";
+import { AuthStoreProvider } from "@/domains/shared/auth/data/AuthStoreProvider";
 
 const geistSans = localFont({
   src: "../../fonts/GeistVF.woff",
@@ -28,8 +22,6 @@ const geistMono = localFont({
 
 const preLoad = async () => {
   await init();
-
-  // await AuthService.isValidSession();
 };
 
 export const metadata: Metadata = {

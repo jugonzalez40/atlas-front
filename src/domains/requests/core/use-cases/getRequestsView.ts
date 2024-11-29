@@ -122,6 +122,6 @@ export async function getRequestsView(): Promise<
     }
   );
 
-  // return result;
-  return mock as unknown as IFetchResponse<IWRequestView>;
+  return result;
+  // return mock as unknown as IFetchResponse<IWRequestView>;
 }

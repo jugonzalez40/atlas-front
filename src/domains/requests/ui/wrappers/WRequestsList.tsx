@@ -16,7 +16,7 @@ export const WRequestsList = () => {
   const requests = useRequestStore(useShallow((state) => state.requests));
 
   return (
-    <div>
+    <div className="h-[calc(100vh-280px)] overflow-y-scroll mb-6">
       {(requests || []).map((request) => (
         <RequestItem key={request.id} {...request} className="mb-6" />
       ))}

@@ -10,6 +10,7 @@ import { RequestStoreProvider } from "@/domains/requests/data/RequestProvider";
 import { WRequestsList } from "@/domains/requests/ui/wrappers/WRequestsList";
 import { WRequestsFilter } from "@/domains/requests/ui/wrappers/WRequestsFilter";
 import { getRequestsView } from "@/domains/requests/core/use-cases/getRequestsView";
+import { WAddLink } from "@/domains/shared/auth/ui/wrappers/WAtlasLinks";
 
 export default async function RequestsPage() {
   const result = await getRequestsView();
@@ -25,12 +26,7 @@ export default async function RequestsPage() {
         <RequestStoreProvider requests={requests}>
           <WRequestsFilter {...filters} className="mb-6" />
           <WRequestsList />
-          <Button asChild className="mt-6">
-            <Link href="/hub/requests/add">
-              <Plus />
-              Agregar
-            </Link>
-          </Button>
+          <WAddLink />
         </RequestStoreProvider>
       </div>
     </div>

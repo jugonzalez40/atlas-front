@@ -1,5 +1,3 @@
-import merge from "lodash.merge";
-
 import { IAtlasConfig, IAtlasService } from "types/config";
 
 import { config as configDefault } from "config/default";
@@ -33,7 +31,7 @@ class ConfigServiceClass implements IAtlasService<IAtlasConfig> {
       const defaultConfig = configModules.default;
 
       global.___ATLAS_CONFIG___ =
-      deepMerge(defaultConfig, config, customConfig || {}) || defaultConfig;
+        deepMerge(defaultConfig, config, customConfig || {}) || defaultConfig;
     } catch (error) {
       console.log("CONFIG_SERVICE", "Could read config");
       console.log(error);

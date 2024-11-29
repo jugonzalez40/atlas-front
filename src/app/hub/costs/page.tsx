@@ -9,6 +9,7 @@ import { PageTitle } from "@/components/ui/page-title";
 
 import { WCostsTable } from "@/domains/costs/ui/wrappers/WCostTable";
 import { getCosts } from "@/domains/costs/core/use-cases/getCosts";
+import { WAddLink } from "@/domains/shared/auth/ui/wrappers/WAtlasLinks";
 
 export default async function CostsPage() {
   const costs = (await getCosts()).data || [];
@@ -18,12 +19,7 @@ export default async function CostsPage() {
       <PageTitle>Costos</PageTitle>
       <div className="mt-6">
         <WCostsTable costs={costs} />
-        <Button asChild className="mt-6">
-          <Link href="/hub/costs/add">
-            <Plus />
-            Agregar
-          </Link>
-        </Button>
+        <WAddLink />
       </div>
     </div>
   );

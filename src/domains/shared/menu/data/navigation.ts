@@ -74,6 +74,6 @@ export const NAVIGATION_MAP = [
   },
   {
     url: "/hub/requests/*",
-    title: "Editar solicitud",
+    title: "Nueva asignación",
   },
 ];

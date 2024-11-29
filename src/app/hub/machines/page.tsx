@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 import { PageTitle } from "@/components/ui/page-title";
 import { getMachines } from "@/domains/machines/core/use-cases/getMachines";
+import { WAddLink } from "@/domains/shared/auth/ui/wrappers/WAtlasLinks";
 
 export default async function MachinesPage() {
   const machines = (await getMachines()).data || [];
@@ -16,12 +17,7 @@ export default async function MachinesPage() {
       <PageTitle>Maquinas</PageTitle>
       <div className="mt-6">
         <WMachinesTable machines={machines} />
-        <Button asChild className="mt-6">
-          <Link href="/hub/machines/add">
-            <Plus />
-            Agregar
-          </Link>
-        </Button>
+        <WAddLink />
       </div>
     </div>
   );

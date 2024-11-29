@@ -19,7 +19,7 @@ export interface ICostsOutput {
   costs: ICost[];
 }
 
-export const formSchema = z.object({
+export const costCenterSchema = z.object({
   startDate: z.string().datetime({ local: true }).min(1, "requerido"),
   endDate: z.string().datetime({ local: true }).min(1, "requerido"),
   name: z.string().min(1, "requerido"),
@@ -27,7 +27,7 @@ export const formSchema = z.object({
   id: z.number().optional(),
 });
 
-export type TFormData = z.infer<typeof formSchema>;
+export type TFormData = z.infer<typeof costCenterSchema>;
 
 interface IWCostsFormProps {
   cost?: ICost;
@@ -35,7 +35,7 @@ interface IWCostsFormProps {
 
 export const WCostsForm = ({ cost }: IWCostsFormProps) => {
   const form = useForm<TFormData>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(costCenterSchema),
     defaultValues: cost || {
       code: "",
       name: "",

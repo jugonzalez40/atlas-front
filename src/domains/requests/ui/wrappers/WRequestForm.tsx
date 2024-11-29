@@ -10,7 +10,7 @@ import { WSubmit } from "../../../shared/form/ui/wrappers/WSubmit";
 import { useFormManager } from "@/domains/shared/form/core/hooks/useFormManager";
 import { addRequest } from "../../core/use-cases/addRequest.server";
 import { Save } from "lucide-react";
-import { editRequest } from "../../core/use-cases/editRequest.server";
+// import { editRequest } from "../../core/use-cases/editRequest.server";
 import { useCrudHandler } from "../../../../hooks/useCrudHandler";
 import {
   IProject,
@@ -21,6 +21,7 @@ import {
   machineClassSchema,
 } from "@/domains/machines/data/machine-entities";
 import { WSelect } from "@/domains/shared/form/ui/wrappers/WSelect";
+import { redirect } from "next/navigation";
 
 export interface IRequestsOutput {
   requests: IRequest[];
@@ -33,17 +34,17 @@ export const requestStatusSchema = z.object({
 
 export const requestFormSchema = z.object({
   id: z.number().optional(),
-  date: z.string().datetime({ local: true }).nullable(),
-  status: requestStatusSchema,
+  requestDate: z.string().datetime({ local: true }).nullable().optional(),
+  status: requestStatusSchema.nullable(),
   project: projectSchema,
-  machineClass: machineClassSchema,
+  machineryClass: machineClassSchema,
 });
 
 const defaultRequestValues = {
   date: null,
-  status: {},
+  status: null,
   project: {},
-  machineClass: {},
+  machineryClass: {},
 };
 
 export type IRequest = z.infer<typeof requestFormSchema>;
@@ -52,25 +53,20 @@ export type IRequestStatus = z.infer<typeof requestStatusSchema>;
 interface IWRequestFormProps {
   request?: IRequest;
   projects: IProject[];
-  machineClasses: IMachineClass[];
+  machineryClasses: IMachineClass[];
 }
 
 export const WRequestForm = ({
   request,
   projects,
-  machineClasses,
+  machineryClasses,
 }: IWRequestFormProps) => {
-  const { add, edit } = useCrudHandler<IRequest>({
+  const { add } = useCrudHandler<IRequest>({
     add: {
       action: addRequest,
       onSuccess: {
+        handler: () => redirect("/hub/requests"),
         message: "👍 Solicitud guardada satisfactoriamente",
-      },
-    },
-    edit: {
-      action: editRequest,
-      onSuccess: {
-        message: "👍 Solicitud modificada satisfactoriamente",
       },
     },
   });
@@ -83,8 +79,7 @@ export const WRequestForm = ({
   useFormManager(form);
 
   const onSubmitHandler = async (values: IRequest) => {
-    if (request) edit(values);
-    else add(values);
+    add(values);
   };
 
   return (
@@ -101,10 +96,10 @@ export const WRequestForm = ({
         </div>
         <div className="flex-auto mb-5">
           <WSelect<IMachineClass>
-            name="machineClass"
+            name="machineryClass"
             label="Tipo de maquina"
             placeholder="Seleccione un tipo de maquina"
-            options={machineClasses}
+            options={machineryClasses}
           />
         </div>
         <WSubmit text="Guardar" className="w-fit" icon={<Save size={15} />} />

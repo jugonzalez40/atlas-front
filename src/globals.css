@@ -152,3 +152,7 @@ body {
 .xd {
   animation: twinkle 0.5s ease-in-out infinite;
 }
+
+.disabled-pointer {
+  pointer-events: none
+}

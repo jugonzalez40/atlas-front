@@ -7,7 +7,7 @@ export type TFormState = {
 };
 
 export type TFormActions = {
-  setForm: (from: any) => void;
+  setForm: (form: any) => void;
   setIsFetching: (isFetching: boolean) => void;
 };
 

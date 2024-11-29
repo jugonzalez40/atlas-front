@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { ConfigService } from "./ConfigService";
 import { redirect } from "next/navigation";
-import { IAuthOutput } from "@/domains/login/core/use-cases/authenticate.server";
+import { IAuthOutput } from "@/domains/shared/auth/core/use-cases/authenticate.server";
+
 
 class AuthServiceClass {
   private getAuthToken() {

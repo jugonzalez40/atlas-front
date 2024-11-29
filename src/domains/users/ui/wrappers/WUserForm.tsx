@@ -31,6 +31,16 @@ export interface IWUserFormProps {
   roles: IRole[];
 }
 
+export const operatorSchema = z.object({
+  operatorId: z.number(),
+  contractStatus: z.string(),
+  contractType: z.string(),
+  jobLocation: z.string(),
+});
+
+// Inferred TypeScript type
+export type IOperator = z.infer<typeof operatorSchema> & IUser;
+
 export const WUserForm = ({ user, roles }: IWUserFormProps) => {
   const { add, edit } = useCrudHandler<IUser>({
     add: {

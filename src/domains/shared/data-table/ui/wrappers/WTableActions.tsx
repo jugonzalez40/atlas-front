@@ -13,6 +13,7 @@ import { FilePenLine, MoreHorizontal, X } from "lucide-react";
 import Link from "next/link";
 import { IActionsConfig } from "./WDataTable";
 import { useCrudHandler } from "@/hooks/useCrudHandler";
+import { WEditLink } from "@/domains/shared/auth/ui/wrappers/WAtlasLinks";
 
 export interface IWTableActionsProps<TData>
   extends CellContext<TData, unknown> {
@@ -45,10 +46,10 @@ export const WTableActions = <TData,>({
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Acciones</DropdownMenuLabel>
         <DropdownMenuItem>
-          <Link className="inline-flex" href={buildHref(row.original)}>
-            <FilePenLine />
-            <p className="ml-4">Editar</p>
-          </Link>
+          <WEditLink
+            href={buildHref(row.original)}
+            className="flex inline-flex"
+          />
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => _delete(row.original)}>

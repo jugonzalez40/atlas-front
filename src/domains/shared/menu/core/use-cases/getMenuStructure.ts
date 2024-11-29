@@ -1,4 +1,4 @@
-import { IAuthOutput } from "@/domains/login/core/use-cases/authenticate.server";
+import { IAuthOutput } from "@/domains/shared/auth/core/use-cases/authenticate.server";
 import { IMenuItem, MENU_TREE } from "../../data/menu";
 
 export const getMeuStructure = (userMetadata: IAuthOutput) => {

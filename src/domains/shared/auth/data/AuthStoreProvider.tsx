@@ -2,7 +2,7 @@
 
 import { type ReactNode, createContext, useRef } from "react";
 
-import { createAuthStore } from "./store";
+import { createAuthStore } from "./auth-store";
 export type TAuthStoreApi = ReturnType<typeof createAuthStore>;
 
 export const AuthStoreContext = createContext<TAuthStoreApi | undefined>(

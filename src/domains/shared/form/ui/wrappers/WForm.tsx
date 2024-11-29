@@ -29,6 +29,9 @@ export const WForm = <TValues extends FieldValues>(
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmitHandler)}>{children}</form>
+      {/* <code>
+        <pre>{JSON.stringify(form.formState.errors, null, 2)}</pre>
+      </code> */}
     </FormProvider>
   );
 };

@@ -1,6 +1,7 @@
 import { PageTitle } from "@/components/ui/page-title";
-import { getRequest } from "@/domains/requests/core/use-cases/getRequest";
-import WRequestForm, { IRequest } from "@/domains/requests/ui/wrappers/WRequestForm";
+import { getRequestEditView } from "@/domains/requests/core/use-cases/editRequestView.server";
+
+import WTaskForm from "@/domains/requests/ui/wrappers/WTaskForm";
 
 interface IEditRequestPageProps {
   params: {
@@ -8,13 +9,16 @@ interface IEditRequestPageProps {
   };
 }
 
-export default async function EditRequestPage({ params }: IEditRequestPageProps) {
-  const request = (await getRequest(params)).data || ({} as IRequest);
+export default async function EditRequestPage({
+  params,
+}: IEditRequestPageProps) {
+  const request = await getRequestEditView({ id: Number(params.id) });
+  if (!request.data) return;
 
   return (
     <div className="mt-6">
-      <PageTitle>Editar requeste</PageTitle>
-      <WRequestForm request={request} />
+      <PageTitle>Nueva asignación</PageTitle>
+      <WTaskForm {...request.data} />
     </div>
   );
 }

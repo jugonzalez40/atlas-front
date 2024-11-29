@@ -26,9 +26,9 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { logout } from "@/domains/login/core/use-cases/logout.server";
+import { IAuthOutput } from "@/domains/shared/auth/core/use-cases/authenticate.server";
+import { logout } from "@/domains/shared/auth/core/use-cases/logout.server";
 
-import { IAuthOutput } from "@/domains/login/core/use-cases/authenticate.server";
 
 export interface IMenuFooterProps {
   userMetadata: IAuthOutput;

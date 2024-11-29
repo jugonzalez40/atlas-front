@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { useFormStore } from "../../core/hooks/useFormStore";
 import { useShallow } from "zustand/shallow";
-import { cn, injectValueInList, isStringArray } from "@/lib/utils";
+import { cn, isStringArray } from "@/lib/utils";
 import React from "react";
 import { useTransformOptions } from "../../core/hooks/useTransformOptions";
 
@@ -93,7 +93,11 @@ export const WSelect = <
               <FormControl>
                 <SelectTrigger>
                   <SelectValue
-                    placeholder={field.value[keyValue] || "Seleccione un valor"}
+                    placeholder={
+                      Object.keys(field?.value || {}).length
+                        ? field?.value[keyValue]
+                        : "Seleccione un valor"
+                    }
                   />
                 </SelectTrigger>
               </FormControl>
