@@ -27,10 +27,12 @@ import {
 import { costCenterSchema } from "@/domains/costs/ui/wrappers/WCostForm";
 import { IGetTaskOuput } from "../../core/use-cases/editRequestView.server";
 import { addTask } from "../../core/use-cases/addTask.server";
-import { IRequest } from "./WRequestForm";
+import { IRequest, requestFormSchema } from "./WRequestForm";
 import { ICost } from "@/domains/costs/data/cost-columns";
 import { Separator } from "@/components/ui/separator";
 import { WSelectList } from "@/domains/shared/form/ui/wrappers/WSelectList";
+import { NavigationService } from "@/services/NavigationService";
+import { userFormSchema } from "@/domains/users/data/user-entites";
 
 const getDefaultTaskValues = (request: IRequest) => {
   return {
@@ -43,9 +45,20 @@ const getDefaultTaskValues = (request: IRequest) => {
 
 export const taskSchema = z.object({
   requestId: z.number().optional(),
-  operator: operatorSchema,
+  operator: z.intersection(operatorSchema, userFormSchema),
   machinery: machineFormSchema,
   costCenter: costCenterSchema,
+  request: requestFormSchema.optional(),
+
+
+});
+
+export const dailyControlSchema = z.object({
+  location: z.string(),
+  description: z.string(),
+  initialHourometer: z.number(),
+  finalHourometer: z.number(),
+  workedHours: z.number(),
 });
 
 export type ITask = z.infer<typeof taskSchema>;
@@ -62,7 +75,7 @@ export const WTaskForm = ({
     add: {
       action: addTask,
       onSuccess: {
-        handler: () => redirect("/hub/requests"),
+        handler: () => NavigationService.redirect("/hub/requests"),
         message: "👍 Solicitud guardada satisfactoriamente",
       },
     },
