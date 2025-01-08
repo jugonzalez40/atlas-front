@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ITask } from "../ui/wrappers/WTaskForm";
+import { ITask } from "../ui/wrappers/WDailyForm";
 import { buildEntityCell } from "@/domains/shared/data-table/core/use-cases/buildEntityCell";
 import { IRequest } from "@/domains/requests/ui/wrappers/WRequestForm";
 

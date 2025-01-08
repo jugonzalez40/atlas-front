@@ -1,11 +1,11 @@
 import { PageTitle } from "@/components/ui/page-title";
-import WTaskForm from "@/domains/tasks/ui/wrappers/WTaskForm";
+import WDailyForm from "@/domains/tasks/ui/wrappers/WDailyForm";
 
 export default function AddTaskPage() {
   return (
     <div className="mt-6">
       <PageTitle>Nuevo taske</PageTitle>
-      <WTaskForm />
+      <WDailyForm />
     </div>
   );
 }

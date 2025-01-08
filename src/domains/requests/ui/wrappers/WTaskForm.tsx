@@ -27,7 +27,7 @@ import {
 import { costCenterSchema } from "@/domains/costs/ui/wrappers/WCostForm";
 import { IGetTaskOuput } from "../../core/use-cases/editRequestView.server";
 import { addTask } from "../../core/use-cases/addTask.server";
-import { IRequest, requestFormSchema } from "./WRequestForm";
+import { IRequest } from "./WRequestForm";
 import { ICost } from "@/domains/costs/data/cost-columns";
 import { Separator } from "@/components/ui/separator";
 import { WSelectList } from "@/domains/shared/form/ui/wrappers/WSelectList";
@@ -44,21 +44,12 @@ const getDefaultTaskValues = (request: IRequest) => {
 };
 
 export const taskSchema = z.object({
+  id: z.number().optional(),
   requestId: z.number().optional(),
   operator: z.intersection(operatorSchema, userFormSchema),
   machinery: machineFormSchema,
   costCenter: costCenterSchema,
-  request: requestFormSchema.optional(),
-
-
-});
-
-export const dailyControlSchema = z.object({
-  location: z.string(),
-  description: z.string(),
-  initialHourometer: z.number(),
-  finalHourometer: z.number(),
-  workedHours: z.number(),
+  // request: z.lazy(() => requestFormSchema.optional()),
 });
 
 export type ITask = z.infer<typeof taskSchema>;
@@ -70,6 +61,7 @@ export const WTaskForm = ({
   operators,
   machineries,
   costCenters,
+  task
 }: IWRequestFormProps) => {
   const { add } = useCrudHandler<ITask>({
     add: {

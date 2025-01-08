@@ -1,7 +1,8 @@
 import { PageTitle } from "@/components/ui/page-title";
 import { ITask } from "@/domains/requests/ui/wrappers/WTaskForm";
+import { getEditTaskView } from "@/domains/tasks/core/use-cases/getEditTaskView.server";
 import { getTask } from "@/domains/tasks/core/use-cases/getTask";
-import WTaskForm from "@/domains/tasks/ui/wrappers/WTaskForm";
+import WDailyForm from "@/domains/tasks/ui/wrappers/WDailyForm";
 
 interface IEditTaskPageProps {
   params: {
@@ -10,14 +11,14 @@ interface IEditTaskPageProps {
 }
 
 export default async function EditTaskPage({ params }: IEditTaskPageProps) {
-  const task = (await getTask(params)).data || ({} as ITask);
+  const response = await getEditTaskView(params.id);
 
-  if (!task) return;
+  if (!response?.data) return;
 
   return (
     <div className="mt-6">
       <PageTitle>Control diario</PageTitle>
-      <WTaskForm task={task} />
+      <WDailyForm {...response.data} />
     </div>
   );
 }

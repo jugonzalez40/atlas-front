@@ -3,7 +3,7 @@
 
 import { RequestService } from "@/services/RequestService";
 import { revalidatePath } from "next/cache";
-import { ITask } from "../../ui/wrappers/WTaskForm";
+import { ITask } from "../../ui/wrappers/WDailyForm";
 
 export interface ITaskInput extends ITask {}
 
